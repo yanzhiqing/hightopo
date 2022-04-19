@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ht.Style</title>
+        <meta charset="UTF-8">
+        <style>
+            html, body, pre {
+                padding: 0px;
+                margin: 0px;
+            }
+        </style>
+        <script src="../../../../lib/core/ht.js"></script>
+        <script src="../../../../lib/plugin/ht-form.js"></script>
+        <script src="../../../../lib/plugin/ht-modeling.js"></script>
+        <script>
+
+            function toComment(key, value){
+                var v = '';
+                if(key === '2d.move.mode'){
+                    return v + '控制图元在2d的移动范围，可取值xy|x|y，其他非空值代表不可移动';
+                }
+                if(key === '3d.move.mode'){
+                    return v + '控制图元在3d的移动范围，可取值xyz|xy|xz|yz|x|y|z，其他非空值代表不可移动';
+                }
+                if(key === 'batch'){
+                    return v + '3d模型所在的批量组，用于优化大数据量图元绘制性能，对应ht.Default.setBatchInfo(name, batchInfo)的name';
+                }
+                if(key === 'transparent.mask'){
+                    return v + '3d图元在该值为true时，界面看不到，但可响应点击等交互操作，参见GraphView#isTransparentMask(data)';
+                }
+                if(key === 'wf.visible'){
+                    return v + '默认为false代表不显示，可设置为selected值代表选中时才显示，或true值代表一直显示线框';
+                }
+                if(key === 'wf.color'){
+                    return v + '线框颜色';
+                }
+                if(key === 'wf.short'){
+                    return v + '默认值为`false`代表显示封闭的立体线框，设置为`true`则显示不封闭的短线框';
+                }
+                if(key === 'wf.width'){
+                    return v + '线框宽度，有些系统下只能显示`1`的效果，不同系统能显示的最大值也都有限制';
+                }
+                if(key === 'wf.mat'){
+                    return v + '线框变换矩阵';
+                }
+                if(key === '2d.visible'){
+                    return v + '控制图元在GraphView上是否可见';
+                }
+                if(key === '2d.selectable'){
+                    return v + '控制图元在GraphView上是否可选中';
+                }
+                if(key === '2d.movable'){
+                    return v + '控制图元在GraphView上是否可移动';
+                }
+                if(key === '2d.editable'){
+                    return v + '控制图元在GraphView上是否可编辑';
+                }
+                if(key === '2d.attachable'){
+                    return v + '设置节点是否可吸附，该属性为编辑属性，只在编辑操作中有效，代码层级设置吸附关系不做处理';
+                }
+                if(key === '2d.hostable'){
+                    return v + '设置节点是否可被吸附，该属性为编辑属性，只在编辑操作中有效，代码层级设置吸附关系不做处理';
+                }
+                if(key === '3d.visible'){
+                    return v + '控制图元在Graph3dView上是否可见';
+                }
+                if(key === '3d.selectable'){
+                    return v + '控制图元在Graph3dView上是否可选中';
+                }
+                if(key === '3d.movable'){
+                    return v + '控制图元在Graph3dView上是否可移动';
+                }
+                if(key === '3d.editable'){
+                    return v + '控制图元在Graph3dView上是否可编辑';
+                }
+                if(key === 'select.color'){
+                    return v + '选中颜色，一般会在选中图元呈现选中边框的效果';
+                }
+                if(key === 'select.width'){
+                    return v + '选中边框宽度，一般会在选中图元呈现选中边框的效果';
+                }
+                if(key === 'select.padding'){
+                    return v + '选中边框内边距，一般会在选中图元呈现选中边框的效果';
+                }
+                if(key === 'select.type'){
+                    return v + '选中图元的样式，shadow代表现实阴影,其他可设置样式参见入门手册的多边形类型章节';
+                }
+                if(key === 'select.brightness'){
+                    return v + '图元在3d下选中时的亮度，大于1代表更亮，小于1代表更暗，1则代表不变化';
+                }
+                if (key === 'shadow') {
+                    return v + '是否开启选中图元的阴影效果';
+                }
+                if(key === 'shadow.blur'){
+                    return v + '选中图元的阴影模糊级别';
+                }
+                if(key === 'shadow.offset.x'){
+                    return v + '选中图元的阴影水平偏移';
+                }
+                if(key === 'shadow.offset.y'){
+                    return v + '选中图元的阴影垂直偏移';
+                }
+                if (key === 'shadow2') {
+                    return v + '是否开启图元的阴影效果，该系列属性和shadow是互斥，优先级低于shadow';
+                }
+                if (key === 'shadow2.color') {
+                    return v + '图元的阴影颜色';
+                }
+                if(key === 'shadow2.blur'){
+                    return v + '图元的阴影模糊级别';
+                }
+                if(key === 'shadow2.offset.x'){
+                    return v + '图元的阴影水平偏移';
+                }
+                if(key === 'shadow2.offset.y'){
+                    return v + '图元的阴影垂直偏移';
+                }
+                if(key === 'icons'){
+                    return v + '设置多组icons图标，设置单组图标可通过Data的addStyleIcon和removeStyleIcon进行';
+                }
+                if(key === 'ingroup'){
+                    return v + '该属性决定图元是否被Group的父亲图元所包含';
+                }
+                if(key === 'image.stretch'){
+                    return v + '该属性决定图片的绘制方式，默认为填充满矩形区域，可设置为uniform和centerUniform的非失真方式';
+                }
+                if(key === "bloom"){
+                    return v + 'fasle，是否开启节点辉光效果，前提是场景需开启辉光 g3d.enablePostProcessing("Bloom", true)，且开启辉光筛选 g3d.setPostProcessingValue("Bloom", "selective", true)';
+                }
+                if(key === 'body.color'){
+                    return v + '图元染色颜色，HT会自动在原有图元图片颜色上叠加染色效果，参见GraphView#getBodyColor(data)';
+                }
+                if(key === 'border.color'){
+                    return v + '图元边框颜色，HT会自动在原有图元上绘制一个边框，参见GraphView#getBorderColor(data)';
+                }
+                if(key === 'border.width'){
+                    return v + '图元边框宽度';
+                }
+                if(key === 'border.padding'){
+                    return v + '图元边框内边距';
+                }
+                if(key === 'border.type'){
+                    return v + '图元边框样式，可设置样式参见入门手册的多边形类型章节';
+                }
+                if(key === 'label'){
+                    return v + '图元文字内容，参见GraphView#getLabel(data)';
+                }
+                if(key === 'label.font'){
+                    return v + '图元文字字体';
+                }
+                if(key === 'label.color'){
+                    return v + '图元文字颜色，参见GraphView#getLabelColor(data)';
+                }
+                if(key === 'label.background'){
+                    return v + '图元文字背景，参见GraphView#getLabelBackground(data)';
+                }
+                if(key === 'label.position'){
+                    return v + '图元文字位置';
+                }
+                if(key === 'label.position.fixed'){
+                    return v + '为`true`时对`Edge`类型的文字起作用，保持文字始终在连线之上或之下的位置';
+                }
+                if(key === 'label.align'){
+                    return v + '图元文字多行时的水平对齐方式';
+                }
+                if(key === 'label.offset.x'){
+                    return v + '图元文字位置x轴偏移';
+                }
+                if(key === 'label.offset.y'){
+                    return v + '图元文字位置y轴偏移';
+                }
+                if(key === 'label.rotation'){
+                    return v + '图元文字旋转弧度';
+                }
+                if(key === 'label.max'){
+                    return v + '图元文字最大长度';
+                }
+                if(key === 'label.scale'){
+                    return v + '文字缩放';
+                }
+                if(key === 'label.selectable'){
+                    return v + '点击图元文字是否选中图元';
+                }
+                if(key === 'label2'){
+                    return v + '图元文字内容，参见GraphView#getLabel2(data)';
+                }
+                if(key === 'label2.font'){
+                    return v + '图元文字字体';
+                }
+                if(key === 'label2.color'){
+                    return v + '图元文字颜色，参见GraphView#getLabel2Color(data)';
+                }
+                if(key === 'label2.background'){
+                    return v + '图元文字背景，参见GraphView#getLabel2Background(data)';
+                }
+                if(key === 'label2.position'){
+                    return v + '图元文字位置';
+                }
+                if(key === 'label2.position.fixed'){
+                    return v + '为`true`时对`Edge`类型的文字起作用，保持文字始终在连线之上或之下的位置';
+                }
+                if(key === 'label2.align'){
+                    return v + '图元文字多行时的水平对齐方式';
+                }
+                if(key === 'label2.offset.x'){
+                    return v + '图元文字位置x轴偏移';
+                }
+                if(key === 'label2.offset.y'){
+                    return v + '图元文字位置y轴偏移';
+                }
+                if(key === 'label2.rotation'){
+                    return v + '图元文字旋转弧度';
+                }
+                if(key === 'label2.max'){
+                    return v + '图元文字最大长度';
+                }
+                if(key === 'label2.scale'){
+                    return v + '文字缩放';
+                }
+                if(key === 'label2.selectable'){
+                    return v + '点击图元文字是否选中图元';
+                }
+                if(key === 'note'){
+                    return v + '标注文字内容，参见GraphView#getNote(data)';
+                }
+                if(key === 'note.expanded'){
+                    return v + '标注是否展开状态';
+                }
+                if(key === 'note.font'){
+                    return v + '标注文字字体';
+                }
+                if(key === 'note.color'){
+                    return v + '标注文字颜色';
+                }
+                if(key === 'note.background'){
+                    return v + '标注背景，参见GraphView#getNoteBackground(data)';
+                }
+                if(key === 'note.position'){
+                    return v + '标注位置';
+                }
+                if(key === 'note.offset.x'){
+                    return v + '标注位置x轴偏移';
+                }
+                if(key === 'note.offset.y'){
+                    return v + '标注位置y轴偏移';
+                }
+                if(key === 'note.max'){
+                    return v + '标注文字最大长度';
+                }
+                if(key === 'note.align'){
+                    return v + '标注文字多行时的水平对齐方式';
+                }
+                if(key === 'note.toggleable'){
+                    return v + '标注是否允许双击进行展开合并交互方式';
+                }
+                if(key === 'note.border.width'){
+                    return v + '标注边框宽度';
+                }
+                if(key === 'note.border.color'){
+                    return v + '标注边框颜色，为空时HT会自动计算合适的边框颜色';
+                }
+                if(key === 'note.scale'){
+                    return v + '标注缩放';
+                }
+                if(key === 'note2'){
+                    return v + '标注文字内容，参见GraphView#getNote2(data)';
+                }
+                if(key === 'note2.expanded'){
+                    return v + '标注是否展开状态';
+                }
+                if(key === 'note2.font'){
+                    return v + '标注文字字体';
+                }
+                if(key === 'note2.color'){
+                    return v + '标注文字颜色';
+                }
+                if(key === 'note2.background'){
+                    return v + '标注背景，参见GraphView#getNote2Background(data)';
+                }
+                if(key === 'note2.position'){
+                    return v + '标注位置';
+                }
+                if(key === 'note2.offset.x'){
+                    return v + '标注位置x轴偏移';
+                }
+                if(key === 'note2.offset.y'){
+                    return v + '标注位置y轴偏移';
+                }
+                if(key === 'note2.max'){
+                    return v + '标注文字最大长度';
+                }
+                if(key === 'note2.align'){
+                    return v + '标注文字多行时的水平对齐方式';
+                }
+                if(key === 'note2.toggleable'){
+                    return v + '标注是否允许双击进行展开合并交互方式';
+                }
+                if(key === 'note2.border.width'){
+                    return v + '标注边框宽度';
+                }
+                if(key === 'note2.border.color'){
+                    return v + '标注边框颜色，为空时HT会自动计算合适的边框颜色';
+                }
+                if(key === 'note2.scale'){
+                    return v + '标注缩放';
+                }
+                if(key === 'group.title.font'){
+                    return v + 'Group类型图元标题字体';
+                }
+                if(key === 'group.title.color'){
+                    return v + 'Group类型图元标题文字颜色';
+                }
+                if(key === 'group.title.background'){
+                    return v + 'Group类型图元标题背景';
+                }
+                if(key === 'group.title.align'){
+                    return v + 'Group类型图元标题文字对齐，可取值left|center|right';
+                }
+                if(key === 'group.title.orientation'){
+                    return v + 'Group类型图元标题朝向，可取值left|top|right|bottom，仅在 group.type为空时有效';
+                }
+                if(key === 'group.border.radius'){
+                    return v + 'Group类型圆形圆角半径，仅在 group.type为空时有效';
+                }
+                if(key === 'group.splitLine'){
+                    return v + 'Group类型图元是否展示标题与内容的分割线，仅在 group.type为空且有标题时有效';
+                }
+                if(key === 'group.background'){
+                    return v + 'Group类型图元背景';
+                }
+                if(key === 'group.depth'){
+                    return v + 'Group类型图元边缘深度，正数为凸起效果，负数为凹陷效果，0为平的效果';
+                }
+                if(key === 'group.position'){
+                    return v + 'Group类型图元位置，该位置决定Group合并状态所处所有包含的children的unionRect区域位置';
+                }
+                if(key === 'group.toggleable'){
+                    return v + 'Group类型图元是否允许双击展开合并';
+                }
+                if(key === 'group.type'){
+                    return v + '组类型，默认为空，组张开时显示为上部分title文字标题，下部分为矩形填充，可设置为oval和rect等形状';
+                }
+                if(key === 'group.image'){
+                    return v + '用于显示组展开的呈现图片效果';
+                }
+                if(key === 'group.image.stretch'){
+                    return v + '组展开图片拉伸模式，默认值为fill，还可取值uniform和centerUniform';
+                }
+                if(key === 'group.repeat.image'){
+                    return v + '组展开时填充重复背景的图片，注意这里的图片不支持矢量';
+                }
+                if(key === 'group.padding'){
+                    return v + '组类型图元内容内边距';
+                }
+                if(key === 'group.padding.left'){
+                    return v + '组展开后左边缘与孩子图元的间距';
+                }
+                if(key === 'group.padding.right'){
+                    return v + '组展开后右边缘与孩子图元的间距';
+                }
+                if(key === 'group.padding.top'){
+                    return v + '组展开后上边缘与孩子图元的间距';
+                }
+                if(key === 'group.padding.bottom'){
+                    return v + '组展开后下边缘与孩子图元的间距';
+                }
+                if(key === 'group.border.width'){
+                    return v + '组展开后的边框宽度';
+                }
+                if(key === 'group.border.width.absolute'){
+                    return v + '组展开后的边框宽度，是否不跟随比例缩放，默认false';
+                }
+                if(key === 'group.border.color'){
+                    return v + '组展开后的边框颜色';
+                }
+                if(key === 'group.border.pattern'){
+                    return v + '组展开后的边框显示虚线样式，Array类型，例如[5, 5]';
+                }
+                if(key === 'group.border.cap'){
+                    return v + '组展开后的边框末端线帽的样式，可选参数为butt|round|square';
+                }
+                if(key === 'group.border.join'){
+                    return v + '组展开后的边框当两条线交汇时创建边角的类型，可选参数为bevel|round|miter';
+                }
+                if(key === 'group.border.repeat.image'){
+                    return v + '组展开时边框重复填充背景的图片，注意这里的图片不支持矢量';
+                }
+                if(key === 'group.gradient'){
+                    return v + '组展开后背景渐近类型';
+                }
+                if(key === 'group.gradient.color'){
+                    return v + '组展开后背景渐近颜色';
+                }
+                if(key === 'keepAspectRatio'){
+                    return v + '节点大小是否等比编辑，等同于按住 shift 编辑';
+                }
+                if(key === 'shape'){
+                    return v + '多边形类型图元，为空时显示为图片，可设置多边形类型参见入门手册';
+                }
+                if(key === 'shape.background'){
+                    return v + '多边形类型图元背景';
+                }
+                if(key === 'shape.repeat.image'){
+                    return v + '填充重复背景的图片，注意这里的图片不支持矢量';
+                }
+                if(key === 'shape.corner.radius'){
+                    return v + '该参数指定roundRect类型的圆角半径，默认为空系统自动调节，可设置正数值 ';
+                }
+                if(key === 'shape.border.width'){
+                    return v + '多边形类型图元边框宽度';
+                }
+                if(key === 'shape.border.color'){
+                    return v + '多边形类型图元边框颜色';
+                }
+                if(key === 'shape.border.3d'){
+                    return v + '多边形类型图元边框是否显示为3d效果';
+                }
+                if(key === 'shape.border.3d.color'){
+                    return v + '多边形类型图元边框3d颜色，为空采用默认白色，呈现3d效果时边缘的中间部分为该颜色';
+                }
+                if(key === 'shape.border.3d.accuracy'){
+                    return v + '多边形类型图元3d效果精确度，该值越小3d渐进效果越好但影响性能，一般情况无需修改';
+                }
+                if(key === 'shape.border.gradient.color'){
+                    return v + '连线渐进色，目前仅在`3D`上折线的非立体方式下支持，在折线末尾端呈现此渐进色';
+                }
+                if(key === 'shape.border.cap'){
+                    return v + '决定多边形类型图元线条末端线帽的样式，可选参数为：butt|round|square';
+                }
+                if(key === 'shape.border.join'){
+                    return v + '决定多边形类型图元当两条线交汇时创建边角的类型，可选参数为：bevel|round|miter';
+                }
+                if(key === 'shape.border.repeat.image'){
+                    return v + '边框重复填充背景的图片，注意这里的图片不支持矢量';
+                }
+                if(key === 'shape.gradient'){
+                    return v + '多边形类型图元渐进类似，可选参数参见入门手册';
+                }
+                if(key === 'shape.gradient.color'){
+                    return v + '多边形类型图元渐进颜色';
+                }
+                if(key === 'shape.polygon.side'){
+                    return v + '多边形类型的边数';
+                }
+                if(key === 'shape.arc.from'){
+                    return v + '圆弧类型起始弧度';
+                }
+                if(key === 'shape.arc.to'){
+                    return v + '圆弧类型结束弧度';
+                }
+                if(key === 'shape.arc.close'){
+                    return v + '圆弧类型是否闭合';
+                }
+                if(key === 'shape.arc.oval'){
+                    return v + '圆弧类型是否为椭圆';
+                }
+                if(key === 'shape.depth'){
+                    return v + '多边形类型图元深度，该属性目前只对`rect`类型起作用，正值代表凸起，负值代表凹陷，默认值为`0`';
+                }
+                if(key === 'shape.border.pattern'){
+                    return v + '多边形类型图元虚线样式参数，`Array`类型，例如`[5, 5]`';
+                }
+                if(key === 'shape.dash'){
+                    return v + '多边形类型图元是否显示虚线';
+                }
+                if(key === 'shape.dash.pattern'){
+                    return v + '多边形类型图元虚线样式';
+                }
+                if(key === 'shape.dash.offset'){
+                    return v + '多边形类型图元虚线偏移';
+                }
+                if(key === 'shape.dash.color'){
+                    return v + '多边形类型图元虚线颜色';
+                }
+                if(key === 'shape.dash.width'){
+                    return v + '多边形类型图元虚线宽度';
+                }
+                if(key === 'shape.dash.3d'){
+                    return v + '多边形类型图元虚线是否显示3d效果';
+                }
+                if(key === 'shape.dash.3d.color'){
+                    return v + '多边形类型图元虚线3d效果颜色，为空采用默认白色，呈现3d效果时连线的中间部分为该颜色';
+                }
+                if(key === 'shape.foreground'){
+                    return v + '多边形类型图元前景色';
+                }
+                if(key === 'shape.foreground.gradient'){
+                    return v + '多边形类型图元前景渐进类型';
+                }
+                if(key === 'shape.foreground.gradient.color'){
+                    return v + '多边形类型图元前景渐进颜色';
+                }
+                if(key === 'shape.foreground.clip.direction'){
+                    return v + '多边形类型图元前景裁切方向';
+                }
+                if(key === 'shape.foreground.clip.percentage'){
+                    return v + '多边形类型图元前景裁切比例';
+                }
+                if(key === 'shape.dash.3d.accuracy'){
+                    return v + '多边形类型图元虚线3d效果精确度，该值越小3d渐进效果越好但影响性能，一般情况无需修改';
+                }
+                if(key === 'edge.type'){
+                    return v + '决定连线走向样式，为空代表连接成直线，多条时自动成组，自环时绘制成圆形；为points时连线走向将由edge.points属性决定，用于绘制折线';
+                }
+                if(key === 'edge.independent'){
+                    return v + '决定连线是否独立显示，为true时即使连接节点不可见时，连线依然可见';
+                }
+                if(key === 'edge.points'){
+                    return v + '可设置类型为ht.List的{x:100, y:100}格式的点对象数组，当edge.type为points时起作用';
+                }
+                if(key === 'edge.segments'){
+                    return v + 'ht.List类型，用于描述点连接样式，数组元素为整型值';
+                }
+                if(key === 'edge.source.position'){
+                    return v + '起始点相对于起始图元的相对位置';
+                }
+                if(key === 'edge.source.offset.x'){
+                    return v + '起始点的水平偏移';
+                }
+                if(key === 'edge.source.offset.y'){
+                    return v + '起始点的垂直偏移';
+                }
+                if(key === 'edge.source.anchor.x'){
+                    return v + '起始点的锚点横向相对位置';
+                }
+                if(key === 'edge.source.anchor.y'){
+                    return v + '起始点的锚点纵向相对位置';
+                }
+                if(key === 'edge.source.anchor.elevation'){
+                    return v + '起始点的锚点垂直方向相对位置';
+                }
+                if(key === 'edge.target.position'){
+                    return v + '结束点相对于结束图元的相对位置';
+                }
+                if(key === 'edge.target.offset.x'){
+                    return v + '结束点的水平偏移';
+                }
+                if(key === 'edge.target.offset.y'){
+                    return v + '结束点的垂直偏移';
+                }
+                if(key === 'edge.target.anchor.x'){
+                    return v + '结束点的锚点横向相对位置';
+                }
+                if(key === 'edge.target.anchor.y'){
+                    return v + '结束点的锚点纵向相对位置';
+                }
+                if(key === 'edge.target.anchor.elevation'){
+                    return v + '结束点的锚点垂直方向相对位置';
+                }
+                if(key === 'edge.color'){
+                    return v + '连线颜色';
+                }
+                if(key === 'edge.width'){
+                    return v + '连线宽度';
+                }
+                if(key === 'edge.offset'){
+                    return v + '连线端点和图元中心点的距离';
+                }
+                if(key === 'edge.group'){
+                    return v + '对于成组的连线，可通过此属性归为不同的组，以达到独立展开合并的效果';
+                }
+                if(key === 'edge.expanded'){
+                    return v + '决定当前连续处于展开还是合并状态';
+                }
+                if(key === 'edge.gap'){
+                    return v + '起始和结束相同节点的连线成捆的显示，该参数为成捆连线之间的间距';
+                }
+                if(key === 'edge.toggleable'){
+                    return v + '决定连线是否响应双击，进行成捆连线展开合并的切换';
+                }
+                if(key === 'edge.pattern'){
+                    return v + 'Array类型，定义虚线样式，例如[5, 5]';
+                }
+                if(key === 'edge.cap'){
+                    return v + '连线末端线帽的样式，可选参数为：butt|round|square';
+                }
+                if(key === 'edge.join'){
+                    return v + '连线为折线交汇时创建边角的类型，可选参数为：bevel|round|miter';
+                }
+                if(key === 'edge.center'){
+                    return v + '决定连线是否聚集到中心点';
+                }
+                if(key === 'edge.3d'){
+                    return v + '决定连线是否显示为3d效果';
+                }
+                if(key === 'edge.3d.color'){
+                    return v + '连线3d颜色，为空采用默认白色，呈现3d效果时连线的中间部分为该颜色';
+                }
+                if(key === 'edge.3d.accuracy'){
+                    return v + '连线3d效果精确度，该值越小3d渐进效果越好但影响性能，一般情况无需修改';
+                }
+                if(key === 'edge.repeat.image'){
+                    return v + '连线重复填充背景的图片，注意这里的图片不支持矢量';
+                }
+                if(key === 'edge.dash'){
+                    return v + '连线是否显示虚线';
+                }
+                if(key === 'edge.dash.pattern'){
+                    return v + '连线虚线样式';
+                }
+                if(key === 'edge.dash.offset'){
+                    return v + '连线虚线偏移';
+                }
+                if(key === 'edge.dash.color'){
+                    return v + '连线虚线颜色';
+                }
+                if(key === 'edge.dash.width'){
+                    return v + '连线虚线宽度';
+                }
+                if(key === 'edge.dash.3d'){
+                    return v + '连线虚线是否显示3d效果';
+                }
+                if(key === 'edge.dash.3d.color'){
+                    return v + '连线虚线3d效果颜色，为空采用默认白色，呈现3d效果时连线的中间部分为该颜色';
+                }
+                if(key === 'edge.dash.3d.accuracy'){
+                    return v + '连线虚线3d效果精确度，该值越小3d渐进效果越好但影响性能，一般情况无需修改';
+                }
+                if(key === 'edge.gradient.color'){
+                    return v + '连线渐进色，目前仅在`3D`上连线的非立体方式下支持，会在连线的`target`端呈现此渐进色';
+                }
+                if(key === 'edge.source.t3'){
+                    return v + '连线source端偏移，[tx, ty, tz]格式，默认为空';
+                }
+                if(key === 'edge.target.t3'){
+                    return v + '连线target端偏移，[tx, ty, tz]格式，默认为空';
+                }
+                if(key === 'attach.row.index'){
+                    return v + '图元host到Grid类型图元的行索引';
+                }
+                if(key === 'attach.column.index'){
+                    return v + '图元host到Grid类型图元的列索引';
+                }
+                if(key === 'attach.row.span'){
+                    return v + '图元host到Grid类型图元的行跨越数';
+                }
+                if(key === 'attach.column.span'){
+                    return v + '图元host到Grid类型图元的列跨越数';
+                }
+                if(key === 'attach.padding'){
+                    return v + '图元host到Grid类型图元的内边距';
+                }
+                if(key === 'attach.padding.left'){
+                    return v + '图元host到Grid类型图元的左边距';
+                }
+                if(key === 'attach.padding.right'){
+                    return v + '图元host到Grid类型图元的右边距';
+                }
+                if(key === 'attach.padding.top'){
+                    return v + '图元host到Grid类型图元的顶边距';
+                }
+                if(key === 'attach.padding.bottom'){
+                    return v + '图元host到Grid类型图元的底边距';
+                }
+                if(key === 'attach.index'){
+                    return v + '用于CSGNode吸附到Shape图元时使用，代表所在Shape的线段索引';
+                }
+                if(key === 'attach.offset'){
+                    return v + '代表吸附在CSGShape图元所在线段的偏移位置';
+                }
+                if(key === 'attach.offset.relative'){
+                    return v + '如果为`true`则偏移量代表所在线段长度乘以attach.offset值';
+                }
+                if(key === 'attach.offset.opposite'){
+                    return v + '代表所在线段的正方向还是反方向偏移';
+                }
+                if(key === 'attach.thickness'){
+                    return v + 'CSGNode的height属性值由Shape的thickness乘以该值决定';
+                }
+                if(key === 'attach.gap'){
+                    return v + '代表与线段垂直方向的偏移';
+                }
+                if(key === 'attach.gap.relative'){
+                    return v + '如果为true则与线段垂直方向的偏移为所Shape的thickness值乘以attach.gap';
+                }
+                if(key === 'attach.cull'){
+                    return v + '决定是否对CSGNode相交的部分进行剔除';
+                }
+                if(key === 'attach.operation'){
+                    return v + '与CSGNode图元模型操作，subtract代表裁剪，union代表融合，intersect代表取相交，其实值代表不做处理';
+                }
+                if(key === 'grid.row.count'){
+                    return v + 'Grid类型图元的行数';
+                }
+                if(key === 'grid.column.count'){
+                    return v + 'Grid类型图元的列数';
+                }
+                if(key === 'grid.row.percents'){
+                    return v + 'Grid类型图元的每行高度百分比，默认为null代表均分';
+                }
+                if(key === 'grid.column.percents'){
+                    return v + 'Grid类型图元的每列宽度百分比，默认为null代表均分';
+                }
+                if(key === 'grid.border'){
+                    return v + 'Grid类型图元的内边缘宽度';
+                }
+                if(key === 'grid.border.left'){
+                    return v + 'Grid类型图元的左边缘宽度';
+                }
+                if(key === 'grid.border.right'){
+                    return v + 'Grid类型图元的右边缘宽度';
+                }
+                if(key === 'grid.border.top'){
+                    return v + 'Grid类型图元的顶边缘宽度';
+                }
+                if(key === 'grid.border.bottom'){
+                    return v + 'Grid类型图元的底边缘宽度';
+                }
+                if(key === 'grid.gap'){
+                    return v + 'Grid类型图元的单元格的间隙';
+                }
+                if(key === 'grid.background'){
+                    return v + 'Grid类型图元的背景';
+                }
+                if(key === 'grid.depth'){
+                    return v + 'Grid类型图元的内边缘的深度，0代表平面效果，正值代表凸起效果，负值代表凹陷效果';
+                }
+                if(key === 'grid.cell.depth'){
+                    return v + 'Grid类型图元的单元格四边缘的深度，0代表平面效果，正值代表凸起效果，负值代表凹陷效果';
+                }
+                if(key === 'grid.cell.border.color'){
+                    return v + 'Grid类型图元设置单元格边框颜色，该属性在grid.cell.depth值为0时起效';
+                }
+                if(key === 'grid.block'){
+                    return v + 'Grid类型图元是否显示块边框，默认值为undefined代表不绘制，v代表绘制列块，h代表绘制行块';
+                }
+                if(key === 'grid.block.padding'){
+                    return v + 'Grid类型图元块边框距离单元格内容间距';
+                }
+                if(key === 'grid.block.width'){
+                    return v + 'Grid类型图元块边框绘制宽度';
+                }
+                if(key === 'grid.block.color'){
+                    return v + 'Grid类型图元块边框绘制颜色';
+                }
+                if(key === 'alphaTest'){
+                    return v + '当图形是不透明时（即没有设置 transparent 属性），贴图`alpha`透明度低于这个值则直接不显示';
+                }
+                if(key === 'brightness'){
+                    return v + '图元在3d下的亮度，大于1代表更亮，小于1代表更暗，1则代表不变化';
+                }
+                if(key === 'opacity'){
+                    return v + '图元在3d下的透明度，值范围0~1';
+                }
+                if(key === 'pixelPerfect'){
+                    return v + '图元在 2d 下，透明区域是否忽略选中图元，默认为 true，表示忽略选中';
+                }
+                if(key === 'label.face'){
+                    return v + '文字在3d下的朝向，可取值left|right|top|bottom|front|back|center';
+                }
+                if(key === 'label.t3'){
+                    return v + '文字在3d下的偏移，格式为[x,y,z]';
+                }
+                if(key === 'label.r3'){
+                    return v + '文字在3d下的旋转，格式为[rotationX,rotationY,rotationZ]';
+                }
+                if(key === 'label.rotationMode'){
+                    return v + '文字在3d下的沿三个轴旋转先后顺序，可取值xyz|xzy|yxz|yzx|zxy|zyx';
+                }
+                if(key === 'label.light'){
+                    return v + '文字在3d下是否受光线影响';
+                }
+                if(key === 'label.blend'){
+                    return v + '文字在3d下染色颜色';
+                }
+                if(key === 'label.opacity'){
+                    return v + '文字在3d下的透明度，值范围0~1';
+                }
+                if(key === 'label.reverse.flip'){
+                    return v + '文字在3d下反面是否显示正面的内容';
+                }
+                if(key === 'label.reverse.color'){
+                    return v + '文字在3d下反面的颜色';
+                }
+                if(key === 'label.reverse.cull'){
+                    return v + '文字在3d下反面是否显示，隐藏背面可提高性能';
+                }
+                if(key === 'label.transparent'){
+                    return v + '文字在3d下是否透明';
+                }
+                if(key === 'label.autorotate'){
+                    return v + '文字在3d下是否自动朝向眼睛的方向';
+                }
+                if(key === 'label.texture.scale'){
+                    return v + '该值代表内存实际生成贴图的倍数，不宜设置过大否则影响性能';
+                }
+                if(key === 'label2.face'){
+                    return v + '文字在3d下的朝向，可取值left|right|top|bottom|front|back|center';
+                }
+                if(key === 'label2.t3'){
+                    return v + '文字在3d下的偏移，格式为[x,y,z]';
+                }
+                if(key === 'label2.r3'){
+                    return v + '文字在3d下的旋转，格式为[rotationX,rotationY,rotationZ]';
+                }
+                if(key === 'label2.rotationMode'){
+                    return v + '文字在3d下的沿三个轴旋转先后顺序，可取值xyz|xzy|yxz|yzx|zxy|zyx';
+                }
+                if(key === 'label2.light'){
+                    return v + '文字在3d下是否受光线影响';
+                }
+                if(key === 'label2.blend'){
+                    return v + '文字在3d下染色颜色';
+                }
+                if(key === 'label2.opacity'){
+                    return v + '文字在3d下的透明度，值范围0~1';
+                }
+                if(key === 'label2.reverse.flip'){
+                    return v + '文字在3d下反面是否显示正面的内容';
+                }
+                if(key === 'label2.reverse.color'){
+                    return v + '文字在3d下反面的颜色';
+                }
+                if(key === 'label2.reverse.cull'){
+                    return v + '文字在3d下反面是否显示，隐藏背面可提高性能';
+                }
+                if(key === 'label2.transparent'){
+                    return v + '文字在3d下是否透明';
+                }
+                if(key === 'label2.autorotate'){
+                    return v + '文字在3d下是否自动朝向眼睛的方向';
+                }
+                if(key === 'label2.texture.scale'){
+                    return v + '该值代表内存实际生成贴图的倍数，不宜设置过大否则影响性能';
+                }
+                if(key === 'note.face'){
+                    return v + '标注在3d下的朝向，可取值left|right|top|bottom|front|back|center';
+                }
+                if(key === 'note.t3'){
+                    return v + '标注在3d下的偏移，格式为[x,y,z]';
+                }
+                if(key === 'note.r3'){
+                    return v + '标注在3d下的旋转，格式为[rotationX,rotationY,rotationZ]';
+                }
+                if(key === 'note.rotationMode'){
+                    return v + '标注在3d下的沿三个轴旋转先后顺序，可取值xyz|xzy|yxz|yzx|zxy|zyx';
+                }
+                if(key === 'note.light'){
+                    return v + '标注在3d下是否受光线影响';
+                }
+                if(key === 'note.blend'){
+                    return v + '标注在3d下染色颜色';
+                }
+                if(key === 'note.opacity'){
+                    return v + '标注在3d下的透明度，值范围0~1';
+                }
+                if(key === 'note.reverse.flip'){
+                    return v + '标注在3d下反面是否显示正面的内容';
+                }
+                if(key === 'note.reverse.color'){
+                    return v + '标注在3d下反面的颜色';
+                }
+                if(key === 'note.reverse.cull'){
+                    return v + '标注在3d下反面是否显示，隐藏背面可提高性能';
+                }
+                if(key === 'note.transparent'){
+                    return v + '标注在3d下是否透明';
+                }
+                if(key === 'note.autorotate'){
+                    return v + '标注在3d下是否自动朝向眼睛的方向';
+                }
+                if(key === 'note.texture.scale'){
+                    return v + '该值代表内存实际生成贴图的倍数，不宜设置过大否则影响性能';
+                }
+                if(key === 'note2.face'){
+                    return v + '标注在3d下的朝向，可取值left|right|top|bottom|front|back|center';
+                }
+                if(key === 'note2.t3'){
+                    return v + '标注在3d下的偏移，格式为[x,y,z]';
+                }
+                if(key === 'note2.r3'){
+                    return v + '标注在3d下的旋转，格式为[rotationX,rotationY,rotationZ]';
+                }
+                if(key === 'note2.rotationMode'){
+                    return v + '标注在3d下的沿三个轴旋转先后顺序，可取值xyz|xzy|yxz|yzx|zxy|zyx';
+                }
+                if(key === 'note2.light'){
+                    return v + '标注在3d下是否受光线影响';
+                }
+                if(key === 'note2.blend'){
+                    return v + '标注在3d下染色颜色';
+                }
+                if(key === 'note2.opacity'){
+                    return v + '标注在3d下的透明度，值范围0~1';
+                }
+                if(key === 'note2.reverse.flip'){
+                    return v + '标注在3d下反面是否显示正面的内容';
+                }
+                if(key === 'note2.reverse.color'){
+                    return v + '标注在3d下反面的颜色';
+                }
+                if(key === 'note2.reverse.cull'){
+                    return v + '标注在3d下反面是否显示';
+                }
+                if(key === 'note2.transparent'){
+                    return v + '标注在3d下是否透明';
+                }
+                if(key === 'note2.autorotate'){
+                    return v + '标注在3d下是否自动朝向眼睛的方向';
+                }
+                if(key === 'note2.texture.scale'){
+                    return v + '该值代表内存实际生成贴图的倍数，不宜设置过大否则影响性能';
+                }
+                if(key === 'shape3d'){
+                    return v + '为空时显示为六面立方体，其他可选值为box|sphere|cylinder|cone|torus|star|rect|roundRect|triangle|rightTriangle|parallelogram|trapezoid';
+                }
+                if(key === 'shape3d.scaleable'){
+                    return v + '模型的显示大小是否根据图元的s3参数变化';
+                }
+                if(key === 'shape3d.top.cap'){
+                    return v + 'ht.Edge和ht.Polyline都通过该参数控制起始部分形状，可取值flat|round|null';
+                }
+                if(key === 'shape3d.bottom.cap'){
+                    return v + 'ht.Edge和ht.Polyline都通过该参数控制结束部分形状，可取值flat|round|null';
+                }
+                if(key === 'shape3d.start.angle'){
+                    return v + 'ht.Edge和ht.Polyline都通过该参数控制管道截面起始边的角度';
+                }
+                if(key === 'shape3d.sweep.angle'){
+                    return v + 'ht.Edge和ht.Polyline都通过该参数控制管道截面的跨越角度';
+                }
+                if(key === 'shape3d.color'){
+                    return v + '3d图形整体颜色';
+                }
+                if(key === 'shape3d.top.color'){
+                    return v + '3d图形顶面颜色';
+                }
+                if(key === 'shape3d.bottom.color'){
+                    return v + '3d图形底面颜色';
+                }
+                if(key === 'shape3d.from.color'){
+                    return v + '3d图形起始面颜色';
+                }
+                if(key === 'shape3d.to.color'){
+                    return v + '3d图形结束面颜色';
+                }
+                if(key === 'shape3d.image'){
+                    return v + '3d图形整体贴图';
+                }
+                if(key === 'shape3d.top.image'){
+                    return v + '3d图形顶面贴图';
+                }
+                if(key === 'shape3d.bottom.image'){
+                    return v + '3d图形底面贴图';
+                }
+                if(key === 'shape3d.from.image'){
+                    return v + '3d图形起始面贴图';
+                }
+                if(key === 'shape3d.to.image'){
+                    return v + '3d图形结束面贴图';
+                }
+                if(key === 'shape3d.light'){
+                    return v + '3d图形是否受光线影响';
+                }
+                if(key === 'shape3d.side'){
+                    return v + '决定3d图形显示为几边型，为0时显示为平滑的曲面效果';
+                }
+                if(key === 'shape3d.side.from'){
+                    return v + '决定3d图形起始边位置';
+                }
+                if(key === 'shape3d.side.to'){
+                    return v + '决定3d图形结束边位置';
+                }
+                if(key === 'shape3d.visible'){
+                    return v + '决定3d图形是否可见，该参数不影响label,note和icons等其他部分元素';
+                }
+                if(key === 'shape3d.from.visible'){
+                    return v + '决定3d图形起始面是否可见';
+                }
+                if(key === 'shape3d.to.visible'){
+                    return v + '决定3d图形结束面是否可见';
+                }
+                if(key === 'shape3d.top.visible'){
+                    return v + '决定3d图形顶面是否可见';
+                }
+                if(key === 'shape3d.bottom.visible'){
+                    return v + '决定3d图形底面是否可见';
+                }
+                if(key === 'shape3d.torus.radius'){
+                    return v + '决定3d圆环形管半径';
+                }
+                if(key === 'shape3d.resolution'){
+                    return v + '决定3d图形微分分段数，和side类似但决定不同的方向的分段，数值越大越均匀但影响性能';
+                }
+                if(key === 'shape3d.blend'){
+                    return v + '决定3d图形的染色';
+                }
+                if(key === 'shape3d.opacity'){
+                    return v + '决定3d图形的透明度，值范围0~1';
+                }
+                if(key === 'shape3d.reverse.flip'){
+                    return v + '决定3d图形的反面是否显示正面的内容';
+                }
+                if(key === 'shape3d.reverse.color'){
+                    return v + '决定3d图形的反面颜色';
+                }
+                if(key === 'shape3d.reverse.cull'){
+                    return v + '决定3d图形的反面是否显示，隐藏背面可提高性能';
+                }
+                if(key === 'shape3d.transparent'){
+                    return v + '决定3d图形是否透明';
+                }
+                if(key === 'shape3d.uv.offset'){
+                    return v + '决定3d图形整体贴图的uv偏移，格式为[0.5,0.5]';
+                }
+                if(key === 'shape3d.uv.scale'){
+                    return v + '决定3d图形整体贴图的uv缩放，格式为[3,2]';
+                }
+                if(key === 'shape3d.uv.rotation'){
+                    return v + '决定3d图形贴图整体旋转角度，格式为数字';
+                }
+                if(key === 'shape3d.top.uv.offset'){
+                    return v + '决定3d图形顶面贴图的uv偏移，格式为[0.5,0.5]';
+                }
+                if(key === 'shape3d.top.uv.scale'){
+                    return v + '决定3d图形顶面贴图的uv缩放，格式为[3,2]';
+                }
+                if(key === 'shape3d.top.uv.rotation'){
+                    return v + '决定3d图形顶面贴图旋转角度，格式为数字';
+                }
+                if(key === 'shape3d.bottom.uv.offset'){
+                    return v + '决定3d图形底面贴图的uv偏移，格式为[0.5,0.5]';
+                }
+                if(key === 'shape3d.bottom.uv.scale'){
+                    return v + '决定3d图形底面贴图的uv缩放，格式为[3,2]';
+                }
+                if(key === 'shape3d.bottom.uv.rotation'){
+                    return v + '决定3d图形底面贴图旋转角度，格式为数字';
+                }
+                if(key === 'shape3d.from.uv.offset'){
+                    return v + '决定3d图形起始面贴图的uv偏移，格式为[0.5,0.5]';
+                }
+                if(key === 'shape3d.from.uv.scale'){
+                    return v + '决定3d图形起始面贴图的uv缩放，格式为[3,2]';
+                }
+                if(key === 'shape3d.from.uv.rotation'){
+                    return v + '决定3d图形起始面贴图旋转角度，格式为数字';
+                }
+                if(key === 'shape3d.to.uv.offset'){
+                    return v + '决定3d图形结束面贴图的uv偏移，格式为[0.5,0.5]';
+                }
+                if(key === 'shape3d.to.uv.scale'){
+                    return v + '决定3d图形结束面贴图的uv缩放，格式为[3,2]';
+                }
+                if(key === 'shape3d.to.uv.rotation'){
+                    return v + '决定3d图形结束面贴图旋转角度，格式为数字';
+                }
+                if(key === 'shape3d.discard.selectable'){
+                    return v + '决定贴图透明度低到被剔除的部分是否可选中';
+                }
+                if(key === 'shape3d.top.discard.selectable'){
+                    return v + '决定顶部贴图透明度低到被剔除的部分是否可选中';
+                }
+                if(key === 'shape3d.bottom.discard.selectable'){
+                    return v + '决定底部贴图透明度低到被剔除的部分是否可选中';
+                }
+                if(key === 'shape3d.from.discard.selectable'){
+                    return v + '决定起始面贴图透明度低到被剔除的部分是否可选中';
+                }
+                if(key === 'shape3d.to.discard.selectable'){
+                    return v + '决定结束面贴图透明度低到被剔除的部分是否可选中';
+                }
+                if(key === 'shape3d.smooth'){
+                    return v + '决定shape3d是sphere/cylinder/torus类别时生成的模型是否是平滑的';
+                }
+                if(key === 'shape3d.point.epsilon'){
+                    return v + 'shape生成3D几何体的时候，过于接近的点将被剔除以便更正确的三角形化';
+                }
+                if (key === '3d.reflectable') {
+                    return v + '设置节点是否镜面可见，设置为 false 时，镜子里看不到该节点';
+                }
+                if(key === 'shape3d.reflector'){
+                    return v + '是否开启作为镜面反射，仅在 shape3d 为 billboard / plane 时生效';
+                }
+                if(key === 'shape3d.reflector.color'){
+                    return v + '镜面反射的混合色';
+                }
+                if(key === 'shape3d.reflector.blur'){
+                    return v + '镜面反射的模糊级别';
+                }
+                if(key === 'shape3d.reflector.blur.ratio'){
+                    return v + '镜面反射的模糊范围';
+                }
+                if(key === 'shape3d.reflector.background'){
+                    return v + '背景色';
+                }
+                if(key === 'shape3d.reflector.clip'){
+                    return v + '镜面之上需要clip，判定单位是深度，裁切需要bias偏差以表现更好，0.003向上稍突出以去除缝隙';
+                }
+                if(key === 'repeat.uv.length'){
+                    return v + '如果设置了长度值，则贴图会根据模型长度自动调节横向贴图倍数';
+                }
+                if(key === 'light.type'){
+                    return v + '默认为`point`点光灯，可设置为`spot`聚光灯，以及`directional`的方向光类型';
+                }
+                if(key === 'light.color'){
+                    return v + '灯颜色';
+                }
+                if(key === 'light.intensity'){
+                    return v + '灯强度，默认为`1`，大于`1`增强，小于`1`减弱';
+                }
+                if(key === 'light.disabled'){
+                    return v + '关闭灯光效果，默认为false，可设置为true关闭灯效';
+                }
+                if(key === 'light.center'){
+                    return v + '光源照射方向的中心点位置';
+                }
+                if(key === 'light.range'){
+                    return v + '灯影响范围，默认为`0`代表可照射到无穷远处，如果设置了值则光照射效果随物体远离光影而衰';
+                }
+                if(key === 'light.angle'){
+                    return v + '灯照射的张角弧度，该张角照射范围内物体才受此光源影响';
+                }
+                if(key === 'light.exponent'){
+                    return v + '灯光照射衰减指数，默认值为`0`，值越大离中心方向越远的物体受光照影响效果越弱';
+                }
+                if(key === 'highlight.visible'){
+                    return v + '3D中图元是否受悬浮高亮影响，默认true，即开启悬浮高亮后，该图元可以显示高亮';
+                }
+                if(key === 'highlight.width'){
+                    return v + '3D中悬浮高亮的厚度，全局设置';
+                }
+                if(key === 'highlight.color'){
+                    return v + '3D中悬浮高亮的颜色，全局设置';
+                }
+                if(key === 'highlight.mode'){
+                    return v + '高亮的模式，包括：`disabled`关闭高亮，`selected`选中高亮，`hover`悬浮高亮，`style`风格设置高亮';
+                }
+                if(key === 'color.empty'){
+                    return v + '3D中贴图无法找到等因素，将会使用空颜色，该值设置空颜色具体采用哪个颜色';
+                }
+                if(key === 'mat'){
+                    return v + '3d整体图形矩阵变化';
+                }
+                if(key === 'left.mat'){
+                    return v + '六面体的左面进行矩阵变化';
+                }
+                if(key === 'right.mat'){
+                    return v + '六面体的右面进行矩阵变化';
+                }
+                if(key === 'top.mat'){
+                    return v + '六面体的顶面进行矩阵变化';
+                }
+                if(key === 'bottom.mat'){
+                    return v + '六面体的底面进行矩阵变化';
+                }
+                if(key === 'front.mat'){
+                    return v + '六面体的前面进行矩阵变化';
+                }
+                if(key === 'back.mat'){
+                    return v + '六面体的后面进行矩阵变化';
+                }
+                if(key === 'dw.flip'){
+                    return v + '对DoorWindow图元显示进行翻转，相当于沿z轴旋转180度';
+                }
+                if(key === 'dw.s3'){
+                    return v + '对DoorWindow图元显示尺寸在原有基础上再进行缩放，[0.999, 0.999, 0.5]代表x和y收缩了0.001，z收缩了0.5';
+                }
+                if(key === 'dw.t3'){
+                    return v + '对DoorWindow图元显示位置在原有基础上再进行绝对位置偏移';
+                }
+                if(key === 'dw.toggleable'){
+                    return v + '对DoorWindow图元是否允许双击进行展开和关闭的操作';
+                }
+                if(key === 'dw.expanded'){
+                    return v + 'DoorWindow图元当前图元是否处于展开状态';
+                }
+                if(key === 'dw.angle'){
+                    return v + 'DoorWindow图元当前状态旋转角度';
+                }
+                if(key === 'dw.start'){
+                    return v + 'DoorWindow图元关闭状态的起始旋转弧度';
+                }
+                if(key === 'dw.end'){
+                    return v + 'DoorWindow图元展开状态的结束旋转弧度';
+                }
+                if(key === 'dw.axis'){
+                    return v + 'DoorWindow图元展开和关闭操作的旋转轴，可取值left|right|top|bottom|v|h';
+                }
+                if(key === 'all.light'){
+                    return v + '六面是否受光线影响';
+                }
+                if(key === 'all.visible'){
+                    return v + '六面是否可见';
+                }
+                if(key === 'all.color'){
+                    return v + '六面颜色';
+                }
+                if(key === 'all.image'){
+                    return v + '六面贴图';
+                }
+                if(key === 'all.blend'){
+                    return v + '六面染色颜色';
+                }
+                if(key === 'all.opacity'){
+                    return v + '六面透明度，值范围0~1';
+                }
+                if(key === 'all.reverse.flip'){
+                    return v + '六面的反面是否显示正面的内容';
+                }
+                if(key === 'all.reverse.color'){
+                    return v + '六面的反面颜色';
+                }
+                if(key === 'all.reverse.cull'){
+                    return v + '六面的背面是否可见';
+                }
+                if(key === 'all.transparent'){
+                    return v + '六面是否透明';
+                }
+                if(key === 'all.uv'){
+                    return v + '六面uv自定义，为空采用默认值[0,0, 0,1, 1,1, 1,0]，左旋转90度[1,0,  0,0, 0,1, 1,1]，右旋转90度[0,1, 1,1, 1,0, 0,0]，右旋转180度[1,1, 1,0, 0,0, 0,1]，左旋转180度：[0,1, 0,0, 1,0, 1,1]';
+                }
+                if(key === 'all.uv.offset'){
+                    return v + '六面贴图的uv偏移，格式为[0.5,0.5]';
+                }
+                if(key === 'all.uv.scale'){
+                    return v + '六面贴图的uv缩放，格式为[3,2]';
+                }
+                
+                if(key === 'all.discard.selectable'){
+                    return v + '六面贴图透明度低到被剔除的部分是否可选中';
+                }
+                if (key === 'text') {
+                    return v + '文本内容';
+                }
+                if (key === 'text.align') {
+                    return v + '文本水平对齐方式，可取值 left|center|right';
+                }
+                if (key === 'text.vAlign') {
+                    return v + '文本在多行情况下的垂直对齐方式，可取值 top|middle|bottom';
+                }
+                if (key === 'text.color') {
+                    return v + '文本颜色';
+                }
+                if (key === 'text.gradient') {
+                    return v + '文本渐近类型';
+                }
+                if (key === 'text.gradient.color') {
+                    return v + '文本渐进颜色';
+                }
+                if (key === 'text.gradient.pack') {
+                    return v + '文本渐进颜色集，可以是颜色值，也可以数组，如 ["linear", 0, 0, 0, 1, 0, "red", 1, "green"]或["radial", 0.5, 0.5, 0.2, 0, "red", 1, "green"]';
+                }
+                if (key === 'text.font') {
+                    return v + '文本字体';
+                }
+                if (key === 'text.shadow') {
+                    return v + '文本是否开启阴影效果';
+                }
+                if (key === 'text.shadow.color') {
+                    return v + '文本阴影颜色';
+                }
+                if (key === 'text.shadow.blur') {
+                    return v + '文本阴影模糊级别';
+                }
+                if (key === 'text.shadow.offset.x') {
+                    return v + '文本阴影水平偏移';
+                }
+                if (key === 'text.shadow.offset.y') {
+                    return v + '文本阴影垂直偏移';
+                }
+                if (key === 'text.scale.x') {
+                    return v + '文本水平缩放值';
+                }
+                if (key === 'text.scale.y') {
+                    return v + '文本垂直缩放值';
+                }
+                if(key === 'text.gradient.pack'){
+                    return v + '文本渐变颜色';
+                }
+                if (key === 'interactive') {
+                    return v + '是否可交互，默认false'
+                }
+                if (key === 'clip.direction') {
+                    return v + '裁切方向。top: 从上到下，right: 从左到右，bottom: 从下到上，left: 从右到左。默认top'
+                }
+                if (key === 'clip.percentage') {
+                    return v + '裁切比例，取值 0 ~ 1'
+                }
+                if (key === 'clip.gradient' || key === 'shape.fill.clip.gradient' || key === 'shape.foreground.clip.gradient') {
+                    return v + '1、大于 1，保持固定宽度的渐变区域；2、0 ~ 1，保持图元方向长度百分比的宽度 3、0，默认值，不处理'
+                }
+                if (key === '3d.clip.direction') {
+                    return v + '裁切方向。top: 从上到下，right: 从左到右，bottom: 从下到上，left: 从右到左。front：从后到前，back：从前到后'
+                }
+                if (key === '3d.clip.percentage') {
+                    return v + '裁切比例，取值 0 ~ 1'
+                }
+                if (key === 'shape.border.width.absolute') {
+                    return v + '多边形边框宽度，是否不跟随比例缩放，默认false'
+                }
+                if (key === 'shape.fill.rule') {
+                    return v + '多边形背景填充规则。nonzero: 非零环境，evenodd: 奇偶环境'
+                }
+                if (key === 'shape.fill.clip.direction') {
+                    return v + '多边形背景裁切方向，默认top。top: 从上到下，right: 从左到右，bottom: 从下到上，left: 从右到左。'
+                }
+                if (key === 'shape.fill.clip.percentage') {
+                    return v + '多边形背景裁切比例，取值 0 ~ 1'
+                }
+                if (key === 'autolayout.gap') {
+                    return v + '节点布局间距'
+                }
+                if (key === 'autolayout.hgap') {
+                    return v + '节点横向布局间距'
+                }
+                if (key === 'autolayout.vgap') {
+                    return v + '节点纵向布局间距'
+                }
+                if (key === 'edge.width.absolute') {
+                    return v + '连线线宽度，是否不跟随比例缩放，默认false'
+                }
+                if (key === 'wf.geometry') {
+                    return v + '是否显示几何体的线条'
+                }
+                if (key === 'wf.loadQuadWireframe') {
+                    return v + '是否载入四边面的线框'
+                }
+                if (key === 'wf.combineTriangle') {
+                    return v + '线框模型是否合并三角'
+                }
+                if (key === 'autorotate') {
+                    return v + '是否自动朝向相机'
+                }
+                if (key === 'fixSizeOnScreen') {
+                    return v + '是否无论缩放远近，在屏幕内呈现固定大小，值可为true（使用图片或矢量自身大小）/false, 也可以是[100, 200]（对应宽高）'
+                }
+                if (key === 'texture.cache') {
+                    return v + '如果贴图是矢量，是否缓存（缓存后性能会得到提升）'
+                }
+                if (key === 'alwaysOnTop') {
+                    return v + '是否总是在最前'
+                }
+                if (key === 'layout.h') {
+                    return v + '横向布局方式，可取值left|center|right|scale|leftright'
+                }
+                if (key === 'layout.v') {
+                    return v + '纵向布局方式，可取值top|center|bottom|scale|topbottom'
+                }
+                if (key === 'preventDefaultWhenInteractive') {
+                    return v + '节点可交互时，是否阻止拓扑图的交互（如缩放平移）'
+                }
+                if (key === '2d.gray') {
+                    return v + '是否灰化，即变为黑白色';
+                }
+                if (key === 'fullscreen') {
+                    return v + '是否占满全屏，可取值： fill 填充，uniform 等比';
+                }
+                if (key === 'fullscreen.gap') {
+                    return v + '全屏时，预留边距';
+                }
+                if (key === 'fullscreen.lock') {
+                    return v + '全屏时是否保持宽高不变，用拓扑图的缩放来适配屏幕，h：横向锁定，宽度不变，v：纵向锁定，高度不变';
+                }
+                if (key === 'attach.points') {
+                    return v + '吸附点，用于辅助连线操作，格式为对象数组[{x, y}, {x, y} ...]';
+                }
+                if (key === 'attach.style') {
+                    return v + '吸附方式，close：接近时吸附，远离时可在其它位置吸附；strict：严格，只能吸附到吸附点上，无法在其它位置上吸附';
+                }
+                if (key === 'attach.close.threshold') {
+                    return v + '吸附点判定距离';
+                }
+                if (key === 'edge.source.index') {
+                    return v + '起始点是另外一条连线时，连接的拐点下标，优先于 edge.source.percent 的设置';
+                }
+                if (key === 'edge.source.percent') {
+                    return v + '起始点是另外一条连线时，连接的百分比位置，取值0~1';
+                }
+                if (key === 'edge.target.index') {
+                    return v + '结束点是另外一条连线时，连接的拐点下标，优先于 edge.target.percent 的设置';
+                }
+                if (key === 'edge.target.percent') {
+                    return v + '结束点是另外一条连线时，连接的百分比位置，取值0~1';
+                }
+                if (key === 'renderTextureSamples') {
+                    return v + '开启后处理后，抗锯齿采样数量，小于2则关闭抗锯齿，取值正整数，但是不建议太大会影响性能';
+                }
+                if (key === 'hide.overlapping.group') {
+                    return v + 'billboard开启autorotate后，同名组的billboard被遮挡会隐藏掉，以避免太多billboard显示，默认undefined不因遮挡隐藏';
+                }
+                if (key === 'vector.dynamic') {
+                    return v + 'billboard开启autorotate后，是否动态根据在屏幕的大小来决定3D贴图大小，以呈现最清晰的状态，注意对性能有一定影响';
+                }
+                if (key === 'vector.dynamic.maxsize') {
+                    return v + '开启vector.dynamic后，动态贴图的大小上限保护，避免太大的贴图对性能影响，建议不超过4096';
+                }
+                if (key === 'texture.scale') {
+                    return v + '矢量贴图在 3D 中的大小比例，例如设置该值为 2 的时候，矢量申明是 64*64，则生成的 3D 贴图是 128*128';
+                }
+                if (key === 'geometry.cache') {
+                    return v + '针对3D中的polyline/edge，是否锁定形状，即使属性变化仍然不进行形状的重建计算，以提升性能。例如此时只是进行uv流动动画，可以将该值设置为true';
+                }
+                if (key === 'texture.mipmap.max') {
+                    return v + '3D 环境下，图片开启 mipmap 的话，设置 mipmap 最高等级，默认 undefined 不特殊设置干预';
+                }
+                if (key === 'texture.filter') {
+                    return v + '3D 环境下，贴图绘制的像素采样方式，可设置字符串 nearest 或者 linear，默认为 undefined 不特殊设置干预';
+                }
+                if (key === 'texture.filter.min') {
+                    return v + '3D 环境下，大贴图绘制到小区域的像素采样方式，可设置字符串 nearest 或者 linear，默认为 undefined，取 texture.filter 样式值';
+                }
+                if (key === 'texture.filter.mag') {
+                    return v + '3D 环境下，小贴图绘制到大区域的像素采样方式，可设置字符串 nearest 或者 linear，默认为 undefined，取 texture.filter 样式值';
+                }
+                if (key === 'envmap') {
+                    return v + '决定节点受环境光影响的程度，取值范围为 0 ~ 1';
+                }
+                if (key === 'csg.cull.color') {
+                    return v + '被裁切位置显示的颜色值';
+                }
+                if (key === 'csg.cull.box') {
+                    return v + '是否用模型的包围盒进行裁切，表示采用 Node 包围盒裁切，可设置为 false，表示采用 Node 设置的 Shape3dModel 进行裁切。注意，如果 Shape3dModel 存在凹陷的面，不建议将该属性设置为 false'
+                }
+                if (key === 'points.image') {
+                    return v + '点云节点上，展示的贴图，包括，rect / circle / 图片 / 矢量，该样式与 points.color 互斥，并且优先级高于 points.color 样式';
+                }
+                if (key === 'points.color') {
+                    return v + '点云节点上，展示的颜色值，只有当未指定 points.image 样式时才生效';
+                }
+                if (key === 'points.transparent') {
+                    return v + '点云节点是否透明';
+                }
+                if (key === 'points.size') {
+                    return v + '点云节点展示的大小，这边要求点云设置的贴图大小，必须是正方形比例的贴图，如果贴图是非正方形，会被拉伸变形';
+                }
+                if (key === 'points.opacity') {
+                    return v + '点云节点的透明度，取值范围 0 ~ 1';
+                }
+                if(key === "keepPosition"){
+                    // return v + '设置为true，修改block下子元素的大小位置，通过改变 block 的锚点保证 block 的位置 position 不变';
+                    return v + '修改block下子元素的大小位置，block 的位置 position 保持不变';
+                }
+                if(key === "text.decoration"){
+                    return v + "文本装饰，可设置为：underline、overline 或 strikethrough";
+                }
+                if(key === "text.vertical"){
+                    return v + "文本是否垂直绘制";
+                }
+                if(key === "text.vertical.gap"){
+                    return v + "文本垂直绘制间隔";
+                }
+
+                var vv;
+                [
+                    {k: 'all', n: '六'},
+                    {k: 'left', n: '左'},
+                    {k: 'right', n: '右'},
+                    {k: 'top', n: '顶'},
+                    {k: 'bottom', n: '底'},
+                    {k: 'front', n: '前'},
+                    {k: 'back', n: '后'}
+                ].forEach(function(face){
+                    if(key === face.k + '.light'){
+                        vv = v + face.n + '面是否受光线影响';
+                    }
+                    if(key === face.k + '.visible'){
+                        vv = v + face.n + '面是否可见';
+                    }
+                    if(key === face.k + '.color'){
+                        vv = v + face.n + '面颜色';
+                    }
+                    if(key === face.k + '.image'){
+                        vv = v + face.n + '面贴图';
+                    }
+                    if(key === face.k + '.blend'){
+                        vv = v + face.n + '面染色颜色';
+                    }
+                    if(key === face.k + '.opacity'){
+                        vv = v + face.n + '面透明度，值范围0~1';
+                    }
+                    if(key === face.k + '.reverse.flip'){
+                        vv = v + face.n + '面的反面是否显示正面的内容';
+                    }
+                    if(key === face.k + '.reverse.color'){
+                        vv = v + face.n + '面的反面颜色';
+                    }
+                    if(key === face.k + '.reverse.cull'){
+                        vv = v + face.n + '面的背面是否可见';
+                    }
+                    if(key === face.k + '.transparent'){
+                        vv = v + face.n + '面是否透明';
+                    }
+                    if(key === face.k + '.uv'){
+                        vv = v + face.n + '面uv自定义，为空采用默认值[0,0, 0,1, 1,1, 1,0]，左旋转90度[1,0,  0,0, 0,1, 1,1]，右旋转90度[0,1, 1,1, 1,0, 0,0]，右旋转180度[1,1, 1,0, 0,0, 0,1]，左旋转180度：[0,1, 0,0, 1,0, 1,1]';
+                    }
+                    if(key === face.k + '.uv.offset'){
+                        vv = v + face.n + '面贴图的uv偏移，格式为[0.5,0.5]';
+                    }
+                    if(key === face.k + '.uv.scale'){
+                        vv = v + face.n + '面贴图的uv缩放，格式为[3,2]';
+                    }
+                    if(key === face.k + '.discard.selectable'){
+                        vv = v + face.n + '贴图透明度低到被剔除的部分是否可选中';
+                    }
+                    if(key === face.k + '.toggleable'){
+                        vv = v + 'CSGBox' + face.n + '面是否允许双击面进行展开和关闭的操作';
+                    }
+                    if(key === face.k + '.expanded'){
+                        vv = v + 'CSGBox' + face.n + '面当前是否处于展开状态';
+                    }
+                    if(key === face.k + '.angle'){
+                        vv = v + 'CSGBox' + face.n + '面当前状态旋转角度';
+                    }
+                    if(key === face.k + '.start'){
+                        vv = v + 'CSGBox' + face.n + '面关闭状态的起始旋转弧度';
+                    }
+                    if(key === face.k + '.end'){
+                        vv = v + 'CSGBox' + face.n + '面展开状态的结束旋转弧度';
+                    }
+                    if(key === face.k + '.axis'){
+                        vv = v + 'CSGBox' + face.n + '面展开和关闭操作的旋转轴，可取值left|right|top|bottom|v|h';
+                    }
+                    if(key === face.k + '.uv.rotation'){
+                        vv = v + face.n + '面贴图uv旋转角度，格式为数字';
+                    }
+                    
+                });
+
+                if(vv){
+                    return vv;
+                }
+                if(key){
+                    console.log(key);
+                    
+                }
+                return v;
+            }
+
+            function init(){
+                var list = [];
+                for(var key in ht.Style){
+                    if(key.indexOf('all.') === 0){
+                        key = key.slice(3);
+                        list.push('front' + key);
+                        list.push('back' + key);
+                        list.push('left' + key);
+                        list.push('right' + key);
+                        list.push('top' + key);
+                        list.push('bottom' + key);
+                    }
+                }
+                list.forEach(function(name){
+                   ht.Style[name] = undefined;
+                });
+
+                var ignoreProperties = [
+                    'shadow.cast',
+                    'shadow.receive',
+                    'shadow.quality',
+                    'shadow.intensity',
+                    'shadow.bias',
+                    'shadow.radius',
+                    'shadow.type',
+                    'shadow.degree.x',
+                    'shadow.degree.z',
+
+                    'state',
+
+                    'shape.gradient.pack',
+                    'texture.wrap'
+                ];
+
+                var json = {};
+                for(var key in ht.Style){
+                    if (ignoreProperties.indexOf(key) >= 0) continue;
+
+                    var value = ht.Style[key];
+                    var comment = toComment(key, value);
+                    if (!comment) continue;
+
+                    var str;
+                    if(value instanceof Array){
+                        str = '[' + value.join(',') + '], ';
+                    }else{
+                        str = value + '，';
+                    }
+                    json[key] = str + comment;
+                }
+
+                document.getElementById('output').innerHTML = JSON.stringify(json, null, 4);
+
+            }
+
+        </script>
+    </head>
+    <body onload="init();">
+        <pre id="output">
+        </pre>
+    </body>
+</html>
