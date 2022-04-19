@@ -1,0 +1,160 @@
+{
+  "v": "7.0.2-dev2",
+  "p": {
+    "autoAdjustIndex": true,
+    "hierarchicalRendering": true
+  },
+  "a": {
+    "rotateAsClock": false,
+    "connectActionType": null
+  },
+  "d": [
+    {
+      "c": "ht.Node",
+      "i": 7295,
+      "p": {
+        "displayName": "貨輪1",
+        "image": "ship.json",
+        "position": {
+          "x": 80.77639,
+          "y": 343.47997
+        },
+        "anchor": {
+          "x": 0.27554,
+          "y": 0.3918
+        }
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7296,
+      "p": {
+        "displayName": "貨輪1",
+        "image": "ship.json",
+        "position": {
+          "x": 589.24472,
+          "y": 343.47997
+        },
+        "anchor": {
+          "x": 0.27554,
+          "y": 0.3918
+        }
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7299,
+      "p": {
+        "position": {
+          "x": 445.29912,
+          "y": 85.79704
+        },
+        "width": 179.13667,
+        "height": 235.70614
+      },
+      "s": {
+        "shape": "roundRect",
+        "shape.background": "rgba(95,247,12,0.77)",
+        "shape.border.width": 1,
+        "shape.border.color": "#979797"
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7300,
+      "p": {
+        "position": {
+          "x": 676.57702,
+          "y": 85.79704
+        },
+        "width": 179.13667,
+        "height": 235.70614
+      },
+      "s": {
+        "shape": "roundRect",
+        "shape.background": "rgba(95,247,12,0.77)",
+        "shape.border.width": 1,
+        "shape.border.color": "#979797"
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7301,
+      "p": {
+        "position": {
+          "x": 208.54606,
+          "y": 85.79704
+        },
+        "width": 179.13667,
+        "height": 235.70614
+      },
+      "s": {
+        "shape": "roundRect",
+        "shape.background": "rgba(95,247,12,0.77)",
+        "shape.border.width": 1,
+        "shape.border.color": "#979797"
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7302,
+      "p": {
+        "position": {
+          "x": 445.29912,
+          "y": -207.13553
+        },
+        "width": 179.13667,
+        "height": 235.70614
+      },
+      "s": {
+        "shape": "roundRect",
+        "shape.background": "rgba(95,247,12,0.77)",
+        "shape.border.width": 1,
+        "shape.border.color": "#979797"
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7303,
+      "p": {
+        "position": {
+          "x": 676.57702,
+          "y": -207.13553
+        },
+        "width": 179.13667,
+        "height": 235.70614
+      },
+      "s": {
+        "shape": "roundRect",
+        "shape.background": "rgba(95,247,12,0.77)",
+        "shape.border.width": 1,
+        "shape.border.color": "#979797"
+      }
+    },
+    {
+      "c": "ht.Node",
+      "i": 7304,
+      "p": {
+        "position": {
+          "x": 208.54606,
+          "y": -207.13553
+        },
+        "width": 179.13667,
+        "height": 235.70614
+      },
+      "s": {
+        "shape": "roundRect",
+        "shape.background": "rgba(95,247,12,0.77)",
+        "shape.border.width": 1,
+        "shape.border.color": "#979797"
+      }
+    }
+  ],
+  "modified": "Fri Aug 30 2019 18:23:18 GMT+0800 (中国标准时间)",
+  "contentRect": {
+    "x": -1.88561,
+    "y": -326.4886,
+    "width": 808.46832,
+    "height": 852.42857
+  }
+}

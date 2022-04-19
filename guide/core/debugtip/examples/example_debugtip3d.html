@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>3D Debug Tip</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <meta charset="UTF-8">
+        <style>
+            html, body {
+                padding: 0px;
+                margin: 0px;
+            }
+            .main {
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+            }
+        </style>
+        <script src="../../../../lib/core/ht.js"></script>
+        <script>
+            var sceneJson;
+            var imageName = 'billboardImage'
+
+            function init() {
+                dataModel = new ht.DataModel();
+                graphView = new ht.graph3d.Graph3dView(dataModel);
+
+                initImageDef();
+
+                graphView.addToDOM();
+                dataModel.deserialize(sceneJson);
+                graphView.setEye([5, 206, 113]);
+                graphView.setCenter([-6, 5, 2]);
+
+                // 设置高亮颜色，高亮粗细，高亮模式，设置其中一个节点不显示高亮
+                graphView.setHighlightColor('#FEB64D');
+                graphView.setHighlightWidth(3);
+                graphView.setHighlightMode('hover');
+
+                graphView.dm().getDataByTag('a').s('highlight.visible', false);
+
+                var node = new ht.Node();
+                node.s({
+                    'shape3d': 'billboard',
+                    'shape3d.image': imageName,
+                    'texture.cache': false,   // 是否缓存
+                    'autorotate': true,     // 始终面向相机
+                    'alwaysOnTop': false,   ////---- 是否需要一直在上方
+                    'vector.dynamic': false, // 是否动态改变贴图的大小以保证清晰
+                    'fixSizeOnScreen': -1,   // 无论缩放，保持 image / 矢量 原始大小，注意需要始终面向相机前提
+                });
+
+                // 数据绑定
+                node.a('textHeader', '5层');
+                node.a('textContent', '办公室');
+                node.p3(0, 30, 0);
+                graphView.dm().add(node);
+
+                graphView.showDebugTip();
+            };
+
+            sceneJson = {
+                "v": "6.2.8",
+                "p": {},
+                "d": [
+                    {
+                        "c": "ht.Shape",
+                        "i": 15210,
+                        "p": {
+                            "position": {
+                                "x": 0,
+                                "y": 9.24232
+                            },
+                            "anchorElevation": 0,
+                            "width": 100,
+                            "height": 100,
+                            "tall": 8,
+                            "elevation": 2,
+                            "segments": {
+                                "__a": [
+                                    1,
+                                    4,
+                                    4,
+                                    4,
+                                    4,
+                                    4
+                                ]
+                            },
+                            "points": {
+                                "__a": [
+                                    {
+                                        "x": 0,
+                                        "y": 59.24232
+                                    },
+                                    {
+                                        "x": -15.96486,
+                                        "y": 59.24232
+                                    },
+                                    {
+                                        "x": -50,
+                                        "y": 59.24232
+                                    },
+                                    {
+                                        "x": -50,
+                                        "y": 59.24232
+                                    },
+                                    {
+                                        "x": -50,
+                                        "y": 59.24232
+                                    },
+                                    {
+                                        "x": -50,
+                                        "y": 23.06432
+                                    },
+                                    {
+                                        "x": -50,
+                                        "y": 9.24232
+                                    },
+                                    {
+                                        "x": -50,
+                                        "y": -21.43425
+                                    },
+                                    {
+                                        "x": -34.86869,
+                                        "y": -40.75768
+                                    },
+                                    {
+                                        "x": 0,
+                                        "y": -40.75768
+                                    },
+                                    {
+                                        "x": 34.86869,
+                                        "y": -40.75768
+                                    },
+                                    {
+                                        "x": 50,
+                                        "y": -18.3576
+                                    },
+                                    {
+                                        "x": 50,
+                                        "y": 9.24232
+                                    },
+                                    {
+                                        "x": 50,
+                                        "y": 35.19045
+                                    },
+                                    {
+                                        "x": 27.68984,
+                                        "y": 59.24232
+                                    },
+                                    {
+                                        "x": 0,
+                                        "y": 59.24232
+                                    }
+                                ]
+                            },
+                            "thickness": -1
+                        },
+                        "s": {
+                            "shape3d.color": "#60ACFC",
+                            "shape3d.top.color": null,
+                            "shape3d.bottom.color": null,
+                            "shape.background": "#EEEEEE"
+                        }
+                    },
+                    {
+                        "c": "ht.Shape",
+                        "i": 15212,
+                        "p": {
+                            "rotation": 4.71239,
+                            "position": {
+                                "x": -55.20917,
+                                "y": -34.36828
+                            },
+                            "anchorElevation": 0,
+                            "width": 49.74807,
+                            "height": 49.74807,
+                            "tall": 14,
+                            "segments": {
+                                "__a": [
+                                    1,
+                                    4,
+                                    4,
+                                    4,
+                                    4,
+                                    4
+                                ]
+                            },
+                            "points": {
+                                "__a": [
+                                    {
+                                        "x": -55.20917,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": -63.15137,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": -80.0832,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": -80.0832,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": -80.0832,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": -80.0832,
+                                        "y": -27.4921
+                                    },
+                                    {
+                                        "x": -80.0832,
+                                        "y": -34.36828
+                                    },
+                                    {
+                                        "x": -80.0832,
+                                        "y": -49.62928
+                                    },
+                                    {
+                                        "x": -70.13232,
+                                        "y": -59.24232
+                                    },
+                                    {
+                                        "x": -55.20917,
+                                        "y": -59.24232
+                                    },
+                                    {
+                                        "x": -40.28601,
+                                        "y": -59.24232
+                                    },
+                                    {
+                                        "x": -30.33513,
+                                        "y": -48.09871
+                                    },
+                                    {
+                                        "x": -30.33513,
+                                        "y": -34.36828
+                                    },
+                                    {
+                                        "x": -30.33513,
+                                        "y": -21.45959
+                                    },
+                                    {
+                                        "x": -41.434,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": -55.20917,
+                                        "y": -9.49425
+                                    }
+                                ]
+                            },
+                            "thickness": -1
+                        },
+                        "s": {
+                            "shape3d.color": "rgb(62,216,240)",
+                            "shape3d.top.color": null,
+                            "shape3d.bottom.color": null,
+                            "shape.background": "#EEEEEE"
+                        }
+                    },
+                    {
+                        "c": "ht.Shape",
+                        "i": 15215,
+                        "p": {
+                            "tag": "a",
+                            "position": {
+                                "x": -0.16119,
+                                "y": 16.14449
+                            },
+                            "anchorElevation": 0,
+                            "width": 60.34788,
+                            "height": 51.27748,
+                            "tall": 8,
+                            "elevation": 3,
+                            "segments": {
+                                "__a": [
+                                    1,
+                                    2,
+                                    2,
+                                    2,
+                                    2,
+                                    2,
+                                    2,
+                                    2,
+                                    2
+                                ]
+                            },
+                            "points": {
+                                "__a": [
+                                    {
+                                        "x": -30.33513,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": 30.01275,
+                                        "y": -9.49425
+                                    },
+                                    {
+                                        "x": 27.36324,
+                                        "y": 3.60744
+                                    },
+                                    {
+                                        "x": 8.47168,
+                                        "y": 3.60744
+                                    },
+                                    {
+                                        "x": 4.4593,
+                                        "y": 41.78323
+                                    },
+                                    {
+                                        "x": -6.87508,
+                                        "y": 41.78323
+                                    },
+                                    {
+                                        "x": -9.78068,
+                                        "y": 3.60744
+                                    },
+                                    {
+                                        "x": -28.01644,
+                                        "y": 3.60744
+                                    },
+                                    {
+                                        "x": -30.33513,
+                                        "y": -9.49425
+                                    }
+                                ]
+                            },
+                            "thickness": -1
+                        },
+                        "s": {
+                            "shape3d.color": "rgb(247,247,247)",
+                            "shape3d.top.color": null,
+                            "shape3d.bottom.color": null,
+                            "shape.background": "#EEEEEE"
+                        }
+                    }
+                ]
+            };
+
+            function initImageDef() {
+                ht.Default.setImage(imageName, {
+                    "width": 106,
+                    "height": 118,
+                    "comps": [
+                        {
+                            "type": "shape",
+                            "background": "rgb(255,255,255)",
+                            "borderWidth": 1,
+                            "borderColor": "rgb(89,87,87)",
+                            "borderCap": "round",
+                            "shadowColor": "#1ABC9C",
+                            "displayName": "數據-詳細（小）",
+                            "scaleX": -1.02,
+                            "rotation": 3.14159,
+                            "closePath": true,
+                            "points": [
+                                4.84948,
+                                3.80991,
+                                4.84948,
+                                107.32382,
+                                85.11837,
+                                107.32382,
+                                97.84933,
+                                97.0893,
+                                97.84933,
+                                31.73809,
+                                26.94682,
+                                31.73809,
+                                4.84948,
+                                3.80991
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "text": "这是一个标签",
+                            "color": "rgb(79,79,79)",
+                            "rect": [
+                                10.53923,
+                                5.24631,
+                                87.31012,
+                                25.532
+                            ]
+                        },
+                        {
+                            "type": "shape",
+                            "borderWidth": 0.6,
+                            "borderColor": "rgb(224,224,224)",
+                            "borderJoin": "miter",
+                            "shadowColor": "#1ABC9C",
+                            "points": [
+                                10.53923,
+                                29.94962,
+                                92.15958,
+                                29.94962
+                            ]
+                        },
+                        {
+                            "type": "oval",
+                            "borderWidth": 2,
+                            "borderColor": "rgb(49,98,232)",
+                            "shadowColor": "#1ABC9C",
+                            "rect": [
+                                12.77531,
+                                39.80898,
+                                25.35167,
+                                25.35167
+                            ]
+                        },
+                        {
+                            "type": "shape",
+                            "borderWidth": 2,
+                            "borderColor": "rgb(49,98,232)",
+                            "borderJoin": "miter",
+                            "shadowColor": "#1ABC9C",
+                            "points": [
+                                18.31073,
+                                55.01171,
+                                23.44074,
+                                58.61658,
+                                32.59156,
+                                46.83143
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "text": {
+                                "func": "attr@textHeader",
+                                "value": "01层"
+                            },
+                            "color": "rgb(79,79,79)",
+                            "rect": [
+                                43.49891,
+                                32.60238,
+                                81.24022,
+                                25.532
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "text": {
+                                "func": "attr@textContent",
+                                "value": "商店入口"
+                            },
+                            "color": "rgb(79,79,79)",
+                            "anchorX": 0,
+                            "scaleX": 0.8,
+                            "rect": [
+                                45.04332,
+                                50.5238,
+                                81.24022,
+                                25.532
+                            ]
+                        }
+                    ]
+                });
+            }
+
+        </script>
+    </head>
+    <body onload="init();">
+    </body>
+</html>
