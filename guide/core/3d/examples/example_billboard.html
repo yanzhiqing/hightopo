@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <title></title>
+    <script>
+        htconfig = {
+            Default: {
+                zoomMax: 1000,
+                zoomMin: 0.001,
+                zoomIncrement: 30
+            }
+        };
+    </script>
+    <script src="../../../../lib/core/ht.js"></script>
+    <script>
+        var m = 15;
+        var n = 9;
+        var imageName = 'icon.json';
+
+        function init() {
+            dm = new ht.DataModel();
+            g3d = new ht.graph3d.Graph3dView(dm);
+            g3d.addToDOM();
+
+            initImageDef();
+
+            // 创建 10 行 10 列的随机 icon
+            for (var i = -(m - 1) / 2; i <= (m - 1) / 2; i++)
+                for (var j = -(n - 1) / 2; j <= (n - 1) / 2; j++)
+                    createIcon(i, j);
+
+
+            setInterval(update, 200);
+        };
+
+        function createIcon(i, j) {
+            var node = new ht.Node();
+            node.s({
+                'shape3d': 'billboard',
+                'shape3d.image': imageName,
+                'texture.cache': true,   // 是否缓存
+                'autorotate': true,     // 始终面向相机
+                'alwaysOnTop': false,   ////---- 是否需要一直在上方
+                'vector.dynamic': false, // 是否动态改变贴图的大小以保证清晰
+                'fixSizeOnScreen': -1,   // 无论缩放，保持 image / 矢量 原始大小，注意需要始终面向相机前提
+            });
+
+            // 数据绑定
+            node.a('textHeader', j + '层(动态)');
+            node.a('textContent', genRandomContent());
+
+            var size = 250;
+            node.p3(i * size, 0, j * 200);
+            dm.add(node);
+        };
+
+        function genRandomContent() {
+            var l1 = ['商城', '超市', '连锁店', '停车场', '咖啡厅'];
+            var l2 = ['入口', '出口', '上层', '下层'];
+
+            return l1[Math.floor(l1.length * Math.random())] +
+                l2[Math.floor(l2.length * Math.random())];
+
+        };
+
+        function update() {
+            // 随便找个节点，改变文字
+            var datas = dm.getDatas()
+            var len = datas.length;
+            var node = datas.get(Math.floor(Math.random() * len));
+            node.a('textContent', genRandomContent());
+
+            /////---- 注意，cache 的代价是，这里需要更新
+            g3d.invalidateCachedTexture(node);
+        };
+
+        function initImageDef() {
+            ht.Default.setImage(imageName, {
+                "width": 106,
+                "height": 118,
+                "comps": [
+                    {
+                        "type": "shape",
+                        "background": "rgb(255,255,255)",
+                        "borderWidth": 1,
+                        "borderColor": "rgb(89,87,87)",
+                        "borderCap": "round",
+                        "shadowColor": "#1ABC9C",
+                        "displayName": "數據-詳細（小）",
+                        "scaleX": -1.02,
+                        "rotation": 3.14159,
+                        "closePath": true,
+                        "points": [
+                            4.84948,
+                            3.80991,
+                            4.84948,
+                            107.32382,
+                            85.11837,
+                            107.32382,
+                            97.84933,
+                            97.0893,
+                            97.84933,
+                            31.73809,
+                            26.94682,
+                            31.73809,
+                            4.84948,
+                            3.80991
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "text": "这是一个标签",
+                        "color": "rgb(79,79,79)",
+                        "rect": [
+                            10.53923,
+                            5.24631,
+                            87.31012,
+                            25.532
+                        ]
+                    },
+                    {
+                        "type": "shape",
+                        "borderWidth": 0.6,
+                        "borderColor": "rgb(224,224,224)",
+                        "borderJoin": "miter",
+                        "shadowColor": "#1ABC9C",
+                        "points": [
+                            10.53923,
+                            29.94962,
+                            92.15958,
+                            29.94962
+                        ]
+                    },
+                    {
+                        "type": "oval",
+                        "borderWidth": 2,
+                        "borderColor": "rgb(49,98,232)",
+                        "shadowColor": "#1ABC9C",
+                        "rect": [
+                            12.77531,
+                            39.80898,
+                            25.35167,
+                            25.35167
+                        ]
+                    },
+                    {
+                        "type": "shape",
+                        "borderWidth": 2,
+                        "borderColor": "rgb(49,98,232)",
+                        "borderJoin": "miter",
+                        "shadowColor": "#1ABC9C",
+                        "points": [
+                            18.31073,
+                            55.01171,
+                            23.44074,
+                            58.61658,
+                            32.59156,
+                            46.83143
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "text": {
+                            "func": "attr@textHeader",
+                            "value": "01层"
+                        },
+                        "color": "rgb(79,79,79)",
+                        "rect": [
+                            43.49891,
+                            32.60238,
+                            81.24022,
+                            25.532
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "text": {
+                            "func": "attr@textContent",
+                            "value": "商店入口"
+                        },
+                        "color": "rgb(79,79,79)",
+                        "anchorX": 0,
+                        "scaleX": 0.8,
+                        "rect": [
+                            45.04332,
+                            50.5238,
+                            81.24022,
+                            25.532
+                        ]
+                    }
+                ]
+            });
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+</body>
+
+</html>

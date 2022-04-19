@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Host</title>
+        <meta charset="UTF-8">
+        <style>
+            html, body {
+                padding: 0px;
+                margin: 0px;
+            }
+            .main {
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+            }
+            .formpane {
+                top : 10px;
+                left : 10px;
+                width: 200px;
+                height: 160px;
+                background: rgba(230,230,230,0.6);
+            }
+        </style>
+        <script>
+            htconfig = {
+                Default:{
+                    toolTipDelay: 300
+                }
+            };
+        </script>
+        <script src="../../../../lib/core/ht.js"></script>
+        <script src="../../../../lib/plugin/ht-form.js"></script>
+        <script>
+            function init() {
+                dataModel = new ht.DataModel();
+                g3d = new ht.graph3d.Graph3dView(dataModel);
+                g3d.setGridSize(100);
+                g3d.setGridVisible(true);
+
+                view = g3d.getView();
+                view.className = 'main';
+                document.body.appendChild(view);
+                window.addEventListener('resize', function (e) {
+                    g3d.invalidate();
+                }, false);
+
+                g3d.setEye([ 0, 100, 400 ]);
+
+                ht.Default.loadFontFace('./wenquanyi.json', function() {
+                    createTextNode();
+                    createFormPane();
+                });
+            };
+
+            function createTextNode() {
+                text = new ht.Node();
+                text.p3([ -150, 0, 0 ]);
+                text.s({
+                    'shape3d' : 'text',
+                    'shape3d.text' : 'Hello ~,图扑软件'
+                });
+                dataModel.add(text);
+            };
+
+            function createFormPane() {
+                formPane = new ht.widget.FormPane();
+                formPane.setWidth(200);
+                formPane.setHeight(160);
+                formPane.getView().className = 'formpane';
+                document.body.appendChild(formPane.getView());
+
+                formPane.addRow(['curveSegments', {
+                    slider : {
+                        min : 1,
+                        max : 10,
+                        value : 4,
+                        onValueChanged : function() {
+                            text.s('shape3d.text.curveSegments', this.getValue());
+                        }
+                    }
+                } ], [ 100, 1 ]);
+
+                formPane.addRow(['size', {
+                    slider : {
+                        min : 0.1,
+                        max : 5,
+                        value : 1,
+                        onValueChanged : function() {
+                            text.s('shape3d.text.size', this.getValue());
+                        }
+                    }
+                } ], [ 100, 1 ]);
+
+                formPane.addRow(['amount', {
+                    slider : {
+                        min : 0.01,
+                        max : 5,
+                        value : 0.5,
+                        onValueChanged : function() {
+                            text.s('shape3d.text.amount', this.getValue());
+                        }
+                    }
+                } ], [ 100, 1 ]);
+
+                formPane.addRow([ 'fill',  {
+                    checkBox: {
+                        selected : true,
+                        onValueChanged: function() {
+                            text.s('shape3d.text.fill', this.getValue());
+                        }
+                    }
+                } ], [ 100, 1 ]);
+
+                formPane.addRow(['spacing', {
+                    slider : {
+                        min : 0.01,
+                        max : 5,
+                        value : 1,
+                        onValueChanged : function() {
+                            text.s('shape3d.text.spacing', this.getValue());
+                        }
+                    }
+                } ], [ 100, 1 ]);
+            };
+        </script>
+    </head>
+    <body onload="init();">
+
+    </body>
+</html>

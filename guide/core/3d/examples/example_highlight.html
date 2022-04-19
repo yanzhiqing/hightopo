@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <title></title>
+    <script>
+        htconfig = {
+            Default: {
+                zoomMax: 1000,
+                zoomMin: 0.001,
+                zoomIncrement: 30
+            }
+        };
+    </script>
+    <script src="../../../../lib/core/ht.js"></script>
+    <script>
+        var sceneJson;
+
+        function init() {
+            dataModel = new ht.DataModel();
+            graph3dView = new ht.graph3d.Graph3dView(dataModel);
+            graph3dView.addToDOM();
+            dataModel.deserialize(sceneJson);
+            graph3dView.setEye([5, 206, 113]);
+            graph3dView.setCenter([-6, 5, 2]);
+
+            // 设置高亮颜色，高亮粗细，高亮模式，设置其中一个节点不显示高亮
+            graph3dView.setHighlightMode('mouseover');
+            graph3dView.setHighlightColor('#FEB64D');
+            graph3dView.setHighlightWidth(3);
+
+            graph3dView.dm().getDataByTag('a').s('highlight.visible', false);
+        };
+
+        sceneJson = {
+            "v": "6.2.8",
+            "p": {},
+            "d": [
+                {
+                    "c": "ht.Shape",
+                    "i": 15210,
+                    "p": {
+                        "position": {
+                            "x": 0,
+                            "y": 9.24232
+                        },
+                        "anchorElevation": 0,
+                        "width": 100,
+                        "height": 100,
+                        "tall": 8,
+                        "elevation": 2,
+                        "segments": {
+                            "__a": [
+                                1,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4
+                            ]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": 0,
+                                    "y": 59.24232
+                                },
+                                {
+                                    "x": -15.96486,
+                                    "y": 59.24232
+                                },
+                                {
+                                    "x": -50,
+                                    "y": 59.24232
+                                },
+                                {
+                                    "x": -50,
+                                    "y": 59.24232
+                                },
+                                {
+                                    "x": -50,
+                                    "y": 59.24232
+                                },
+                                {
+                                    "x": -50,
+                                    "y": 23.06432
+                                },
+                                {
+                                    "x": -50,
+                                    "y": 9.24232
+                                },
+                                {
+                                    "x": -50,
+                                    "y": -21.43425
+                                },
+                                {
+                                    "x": -34.86869,
+                                    "y": -40.75768
+                                },
+                                {
+                                    "x": 0,
+                                    "y": -40.75768
+                                },
+                                {
+                                    "x": 34.86869,
+                                    "y": -40.75768
+                                },
+                                {
+                                    "x": 50,
+                                    "y": -18.3576
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 9.24232
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 35.19045
+                                },
+                                {
+                                    "x": 27.68984,
+                                    "y": 59.24232
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 59.24232
+                                }
+                            ]
+                        },
+                        "thickness": -1
+                    },
+                    "s": {
+                        "shape3d.color": "#60ACFC",
+                        "shape3d.top.color": null,
+                        "shape3d.bottom.color": null,
+                        "shape.background": "#EEEEEE"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 15212,
+                    "p": {
+                        "rotation": 4.71239,
+                        "position": {
+                            "x": -55.20917,
+                            "y": -34.36828
+                        },
+                        "anchorElevation": 0,
+                        "width": 49.74807,
+                        "height": 49.74807,
+                        "tall": 14,
+                        "segments": {
+                            "__a": [
+                                1,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4
+                            ]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": -55.20917,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": -63.15137,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": -80.0832,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": -80.0832,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": -80.0832,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": -80.0832,
+                                    "y": -27.4921
+                                },
+                                {
+                                    "x": -80.0832,
+                                    "y": -34.36828
+                                },
+                                {
+                                    "x": -80.0832,
+                                    "y": -49.62928
+                                },
+                                {
+                                    "x": -70.13232,
+                                    "y": -59.24232
+                                },
+                                {
+                                    "x": -55.20917,
+                                    "y": -59.24232
+                                },
+                                {
+                                    "x": -40.28601,
+                                    "y": -59.24232
+                                },
+                                {
+                                    "x": -30.33513,
+                                    "y": -48.09871
+                                },
+                                {
+                                    "x": -30.33513,
+                                    "y": -34.36828
+                                },
+                                {
+                                    "x": -30.33513,
+                                    "y": -21.45959
+                                },
+                                {
+                                    "x": -41.434,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": -55.20917,
+                                    "y": -9.49425
+                                }
+                            ]
+                        },
+                        "thickness": -1
+                    },
+                    "s": {
+                        "shape3d.color": "rgb(62,216,240)",
+                        "shape3d.top.color": null,
+                        "shape3d.bottom.color": null,
+                        "shape.background": "#EEEEEE"
+                    }
+                },
+                {
+                    "c": "ht.Shape",
+                    "i": 15215,
+                    "p": {
+                        "tag": "a",
+                        "position": {
+                            "x": -0.16119,
+                            "y": 16.14449
+                        },
+                        "anchorElevation": 0,
+                        "width": 60.34788,
+                        "height": 51.27748,
+                        "tall": 8,
+                        "elevation": 3,
+                        "segments": {
+                            "__a": [
+                                1,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2,
+                                2
+                            ]
+                        },
+                        "points": {
+                            "__a": [
+                                {
+                                    "x": -30.33513,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": 30.01275,
+                                    "y": -9.49425
+                                },
+                                {
+                                    "x": 27.36324,
+                                    "y": 3.60744
+                                },
+                                {
+                                    "x": 8.47168,
+                                    "y": 3.60744
+                                },
+                                {
+                                    "x": 4.4593,
+                                    "y": 41.78323
+                                },
+                                {
+                                    "x": -6.87508,
+                                    "y": 41.78323
+                                },
+                                {
+                                    "x": -9.78068,
+                                    "y": 3.60744
+                                },
+                                {
+                                    "x": -28.01644,
+                                    "y": 3.60744
+                                },
+                                {
+                                    "x": -30.33513,
+                                    "y": -9.49425
+                                }
+                            ]
+                        },
+                        "thickness": -1
+                    },
+                    "s": {
+                        "shape3d.color": "rgb(247,247,247)",
+                        "shape3d.top.color": null,
+                        "shape3d.bottom.color": null,
+                        "shape.background": "#EEEEEE"
+                    }
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body onload="init()">
+</body>
+
+</html>
