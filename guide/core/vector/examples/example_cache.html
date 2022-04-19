@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cache Rule</title>
+        <meta charset="UTF-8">   
+        <style>
+            html, body {
+                padding: 0px;
+                margin: 0px;                
+            }            
+            .main {
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+            }
+        </style>     
+        <script src="../../../../lib/core/ht.js"></script>   
+        <script>
+            function init() {
+                var gv1 = new ht.graph.GraphView(),
+                    gv2 = new ht.graph.GraphView(),
+                    split = new ht.widget.SplitView(gv1, gv2, 'h', 0.5);
+
+                split.addToDOM();
+
+                initGv(gv1, 'symbols/machine.json');
+                initGv(gv2, 'symbols/machine_cache.json');
+            }
+
+            function initGv(gv, image) {
+                var dm = gv.dm();
+                for (var i = 0; i < 20; i++) {
+                    for (var j = 0; j < 10; j++) {
+                        var node = new ht.Node();
+                        node.setImage(image);
+                        node.p(i * 300, j * 300);
+                        node.a('error', Math.random() > 0.6);
+                        dm.add(node);
+                    }
+                }
+                gv.fitContent();
+                gv.setMovableFunc(function() {return false});
+            }
+
+        </script>
+    </head>
+    <body onload="init();">
+    </body>
+</html>

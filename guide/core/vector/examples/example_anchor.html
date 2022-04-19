@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Comp Anchor</title>
+    <meta charset="UTF-8">
+    <style>
+        html,
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .main {
+            margin: 0px;
+            padding: 0px;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+        }
+    </style>
+    <script src="../../../../lib/core/ht.js"></script>
+    <script>
+        ht.Default.setImage('comp.anchor.demo', {
+            "width": 200,
+            "height": 200,
+            "comps": [
+                {
+                    "type": "image",
+                    "color": "rgb(93,217,174)",
+                    "name": "node_image",
+                    "anchorX": 1,
+                    "anchorY": 1,
+                    "rotation": {
+                        "func": "attr@green.rotation",
+                        "value": 0
+                    },
+                    "rect": [
+                        50,
+                        50,
+                        50,
+                        50
+                    ]
+                },
+                {
+                    "type": "image",
+                    "color": "rgb(242,83,75)",
+                    "name": "node_image",
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "rotation": {
+                        "func": "attr@red.rotation",
+                        "value": 0
+                    },
+                    "rect": [
+                        100,
+                        100,
+                        50,
+                        50
+                    ]
+                }
+            ]
+        });
+        ht.Default.setImage('comp.anchor.demo2', {
+            "modified": "Mon Dec 16 2019 14:46:25 GMT+0800 (中国标准时间)",
+            "dataBindings": [
+                {
+                    "attr": "comp.scale",
+                    "valueType": "Number"
+                }
+            ],
+            "width": 200,
+            "height": 200,
+            "comps": [
+                {
+                    "type": "image",
+                    "name": "node_image",
+                    "anchorY": 1,
+                    "scaleY": {
+                        "func": "attr@comp.scale",
+                        "value": 1
+                    },
+                    "rect": [
+                        75,
+                        150,
+                        50,
+                        50
+                    ]
+                },
+                {
+                    "type": "image",
+                    "name": "node_image",
+                    "anchorX": 1,
+                    "scaleX": {
+                        "func": "attr@comp.scale",
+                        "value": 1
+                    },
+                    "rect": [
+                        150,
+                        75,
+                        50,
+                        50
+                    ]
+                },
+                {
+                    "type": "image",
+                    "name": "node_image",
+                    "anchorX": 0,
+                    "scaleX": {
+                        "func": "attr@comp.scale",
+                        "value": 1
+                    },
+                    "rect": [
+                        0,
+                        75,
+                        50,
+                        50
+                    ]
+                },
+                {
+                    "type": "image",
+                    "name": "node_image",
+                    "anchorY": 0,
+                    "scaleY": {
+                        "func": "attr@comp.scale",
+                        "value": 1
+                    },
+                    "rect": [
+                        75,
+                        0,
+                        50,
+                        50
+                    ]
+                }
+            ]
+        });
+        function init() {
+            dataModel = new ht.DataModel();
+            graphView = new ht.graph.GraphView(dataModel);
+            graphView.addToDOM();
+
+            var rotationNode = new ht.Node();
+            rotationNode.setImage('comp.anchor.demo');
+            rotationNode.p(180, 120);
+            dataModel.add(rotationNode);
+            var rotation = 0;
+            setInterval(function () {
+                rotationNode.a({
+                    'green.rotation': rotation,
+                    'red.rotation': -rotation
+                });
+
+                rotation += Math.PI / 30;
+            }, 50);
+
+            var scaleNode = new ht.Node();
+            scaleNode.setImage('comp.anchor.demo2');
+            scaleNode.p(480, 120);
+            dataModel.add(scaleNode);
+            var scale = 0;
+            setInterval(function() {
+                scaleNode.a('comp.scale', scale);
+                scale = (scale + 0.03) % 1;
+            }, 50);
+        }
+
+
+    </script>
+</head>
+
+<body onload="init();">
+</body>
+
+</html>

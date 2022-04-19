@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>renderHTML</title>
+        <meta charset="UTF-8">   
+        <style>
+            html, body {
+                padding: 0px;
+                margin: 0px;                
+            }            
+        </style>     
+        <script src="../../../../lib/core/ht.js"></script>   
+        <script>
+            function init() {
+                ht.Default.setImage('treeView', {
+                    width: 300,
+                    height: 500,
+                    pixelPerfect: false,
+                    scrollable: true,
+                    interactive: true,
+                    renderHTML: function(data, gv, cache) {
+                        if (!cache.htmlView) {
+                            var tree = cache.htmlView = new ht.widget.TreeView(),
+                                dm = tree.dm(),
+                                parent, child, childrenCount;
+                            tree.getView().style.background = '#e8e8e8';
+                            for (var i = 0; i < 5; i++) {
+                                childrenCount = Math.floor(Math.random() * 10 + 5);
+                                parent = new ht.Data();
+                                parent.setName('Node ' + (i + 1));
+                                dm.add(parent);
+                                for (var j = 0; j < childrenCount; j++) {
+                                    child = new ht.Data();
+                                    child.setName('Node ' + (i + 1) + '-' + (j + 1));
+                                    child.setParent(parent);
+                                    dm.add(child);
+                                }
+                            }
+                            tree.layoutHTML = function() {
+                                gv.layoutHTML(data, tree);
+                            };
+                            tree.expandAll();
+                        }
+                        return cache.htmlView;
+                    },
+                    comps: []
+                });
+                ht.Default.setImage('iframe', {
+                    width: 500,
+                    height: 500,
+                    pixelPerfect: false,
+                    scrollable: true,
+                    interactive: true,
+                    renderHTML: function(data, gv, cache) {
+                        if (!cache.htmlView) {
+                            var div = cache.htmlView = document.createElement('div'),
+                                iframe = cache.iframe = document.createElement('iframe');
+                            iframe.src = cache.url = 'https://www.hightopo.com';
+                            iframe.style.position = 'absolute';
+                            iframe.style.width = '100%';
+                            iframe.style.height = '100%';
+
+                            div.appendChild(iframe);
+                            div.style.position = 'absolute';
+                            div.layoutHTML = function () {
+                                gv.layoutHTML(data, div, true);
+                            }
+                        }
+                        var url = data.a('url');
+                        if (url && url !== cache.url) {
+                            cache.iframe.src = cache.url = url;
+                        }
+                        return cache.htmlView;
+                    },
+                    comps: []
+                });
+
+                var gv = window.gv = new ht.graph.GraphView(),
+                    dm = gv.dm();
+
+                var treeNode = new ht.Node();
+                treeNode.setImage('treeView');
+                dm.add(treeNode);
+
+                var iframeNode = new ht.Node();
+                iframeNode.setImage('iframe');
+                iframeNode.p(500, 0);
+                dm.add(iframeNode);
+
+                var button = new ht.Text();
+                button.s({
+                    'text': 'Click Me',
+                    'text.align': 'center',
+                    'pixelPerfect': false,
+                    'interactive': true,
+                    'onClick': function(event, data, view) {
+                        iframeNode.a('url', 'http://www.hightopo.com/demo/ht-structure3d/');
+                    }
+                });
+                button.setWidth(50);
+                button.setHeight(20);
+                button.p(500, 290);
+                dm.add(button);
+
+                gv.addToDOM();
+                gv.fitContent(true);
+            }
+        </script>
+    </head>
+    <body onload="init();">
+    </body>
+</html>

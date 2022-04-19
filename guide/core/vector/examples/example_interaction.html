@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Text Type</title>
+        <meta charset="UTF-8">   
+        <style>
+            html, body {
+                padding: 0px;
+                margin: 0px;                
+            }            
+            .main {
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+            }
+        </style>     
+        <script src="../../../../lib/core/ht.js"></script>   
+        <script>
+            ht.Default.setImage('sunrise', {
+                width: 220,
+                height: 150,
+                interactive: true,
+                comps: [
+                    {
+                        type: 'shape',
+                        points: [10, 110, 10, 10, 210, 10, 210, 110],
+                        segments: [1, 4],
+                        background: 'yellow',
+                        gradient: 'linear.north'
+                    },
+                    {
+                        type: 'shape',
+                        shadow: true,
+                        shadowColor: {
+                            func: 'attr@ht.shadow.color',
+                            value: '#60ACFC'
+                        },
+                        points: [30, 10, 30, 110, 30, 60, 90, 60, 90, 10,
+                            90, 110, 130, 10, 190, 10, 160, 10, 160, 110
+                        ],
+                        segments: [
+                            1, 2, 1, 2, 1, 2, 1, 2, 1, 2
+                        ],
+                        borderWidth: 10,
+                        borderColor: {
+                            func: 'attr@ht.color',
+                            value: '#60ACFC'
+                        },
+                        pixelPerfect: true,
+                        borderCap: 'round',
+                        onEnter: function(event, data, view, point, width, height) {
+                            view.setCursor('pointer');
+                            data.a('ht.color', '#FEB64D');
+                        },
+                        onLeave: function(event, data, view, point, width, height) {
+                            view.setCursor('default');
+                            data.a('ht.color', '#60ACFC');
+                        },
+                        onDown: function(event, data, view, point, width, height) {
+                            view.setCursor('pointer');
+                            data.a('ht.shadow.color', '#FEB64D');
+                        },
+                        onUp: function(event, data, view, point, width, height) {
+                            view.setCursor('rgb(145,115,205)');
+                            data.a('ht.shadow.color', '#60ACFC');
+                        }
+                    },
+                    {
+                        type: 'shape',
+                        points: [10, 130, 35, 120, 60, 130, 85, 140,
+                            110, 130, 135, 120, 160, 130, 185, 140, 210, 130
+                        ],
+                        segments: [
+                            1, 3, 3, 3, 3
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#3498DB'
+                    }
+                ]
+            });
+
+            function init() {
+                dataModel = new ht.DataModel();
+                graphView = new ht.graph.GraphView(dataModel);
+                
+                graphView.addToDOM();
+
+                var node = new ht.Node();
+                node.setPosition(250, 50);
+                node.setImage('sunrise');
+                dataModel.add(node);                 
+
+                graphView.fitContent(true);
+            }
+
+
+        </script>
+    </head>
+    <body onload="init();">
+    </body>
+</html>

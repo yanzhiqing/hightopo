@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Comp State</title>
+    <meta charset="UTF-8">
+    <style>
+        html,
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+    <script src="../../../../lib/core/ht.js"></script>
+    <script src="../../../../lib/plugin/ht-form.js"></script>
+    <script>
+        function init() {
+            dataModel = new ht.DataModel();
+            graphView = new ht.graph.GraphView(dataModel);
+
+            ht.Default.setImage('myShape', {
+                "state": "rect",
+                'width': 200,
+                'height': 200,
+                "background": "rgb(255,235,195)",
+                'clip': true,
+                comps: [
+                    {
+                        "state": "rect",
+                        'type': 'rect',
+                        'background': '#FF7C7C',
+                        'rect': [50, 50, 100, 100],
+                        'opacity': 1
+                    },
+                    {
+                        "state": "oval",
+                        'type': 'oval',
+                        'background': 'lightgreen',
+                        'rect': [50, 50, 100, 100],
+                        'opacity': 1
+                    },
+                    {
+                        "state": "roundRect",
+                        'type': 'roundRect',
+                        'background': 'lightblue',
+                        'rect': [50, 50, 100, 100],
+                        'opacity': 1
+                    }
+                ]
+            });
+
+            node = new ht.Node();
+            node.setImage('myShape');
+            node.p(200, 100);
+            dataModel.add(node);
+
+            graphView.addToDOM();
+
+            formPane = new ht.widget.FormPane();
+            formPane.setPadding(2);
+            formPane.setHGap(2);
+            formPane.setWidth(240);
+            formPane.setHeight(28);
+
+            formPane.addRow([
+                'State',
+                {
+                    comboBox: {
+                        value: 'rect',
+                        values: ['rect', 'oval', 'roundRect'],
+                        onValueChanged: function(oldValue, newValue) {
+                            node.s('state', newValue);
+                        }
+                    }
+                }
+            ], [80, 0.1], 24);
+
+            var style = formPane.getView().style;
+            style.position = 'absolute';
+            style.top = '10px';
+            style.right = '10px';
+            style.backgroundColor = 'rgba(230, 230, 230, 0.85)';
+            document.body.appendChild(formPane.getView());
+
+        }
+
+
+    </script>
+</head>
+
+<body onload="init();">
+</body>
+
+</html>
