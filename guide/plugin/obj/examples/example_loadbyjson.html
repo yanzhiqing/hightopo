@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OBJ Ajax</title>
+        <meta charset="UTF-8">   
+        <style>
+            html, body {
+                padding: 0px;
+                margin: 0px;                
+            }            
+            .main {
+                margin: 0px;
+                padding: 0px;
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;                
+            }
+        </style> 
+        <script src="../../../../lib/core/ht.js"></script> 
+        <script src="../../../../lib/plugin/ht-obj.js"></script> 
+        <script src="../../../../lib/plugin/ht-form.js"></script> 
+        
+        <script>
+
+            function init(){ 
+                var dm = new ht.DataModel(),
+                    g3d = window.g3d = new ht.graph3d.Graph3dView(dm);
+                g3d.setGridVisible(true);
+                g3d.addToDOM();
+
+                // 通过 json 文件加载
+                var node = new ht.Node();
+                node.setAnchor3d([0.5, 0, 0.5]);
+                node.p3(-200, 0, 0);
+                node.s('shape3d', 'models/equipment.json');
+                dm.add(node);
+
+                // 通过 json 对象加载
+                var model = {
+                    "modelType": "obj",
+                    "obj": "obj/equipment.obj",
+                    "mtl": "obj/equipment.mtl",
+                    "prefix": "obj/"
+                };
+                var node2 = new ht.Node();
+                node2.setAnchor3d([0.5, 0, 0.5]);
+                node2.p3(200, 0, 0);
+                node2.s('shape3d', model);
+                dm.add(node2);
+
+            } 
+        
+                
+                             
+                        
+        </script>
+    </head>
+    <body onload="init();">                         
+    </body>
+</html>
