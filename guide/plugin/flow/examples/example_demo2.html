@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <script type="text/javascript" src="../../../../lib/core/ht.js"></script>
+        <script type="text/javascript" src="../../../../lib/plugin/ht-flow.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .view {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+        </style>
+        <script type="text/javascript">
+            ht.Default.setImage("title", {
+                "width": 150,
+                "height": 50,
+                "comps": [
+                    {
+                        "type": 'text',
+                        "text": "Bus route map",
+                        "rect": [0, 0, 150, 50],
+                        "color": '#34495E',
+                        "font": 'bold 18px Arial',
+                        "align": 'center',
+                        "shadow": true,
+                        "shadowColor": '#A6A0fd'
+                    }
+                ]
+            });
+            ht.Default.setImage("bus", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADuUlEQVR4Xu2XS2hcVRzGf+ec+8hMnaRJbNQkJVRIfZS0ahobRKHu+rIPROtK1AqSLmyrVhBcZKWb1EYXBdGF+NioEVqirlSM4itiKImVoNWpj5a2ah5tJ5nk3vN3LvfOIpQJc1dZmA+++z/nu/P9z8c5ZxZXiQhLCQ38vwMsB1gOoCJ2vTi02ck1fmpFEAEBkIW/UqTTtaqw3OylJ7493P06YAGciMH83D1rG33aGzMABFYIS5TYgtEqImEK3TMKrRRCAgFBODE6dwB4C5ghQaaj95O3j49NyrwVufXIqFyZF/lnRuRiIa7R/JaU+vr+Mdn3Xl4eeTcvj5XqXcdOiRWRpwb/kFXde5pJoAFH1VzT2ZhzuVwExzFcmoWpGVtiGNVojjEp9CIorenf3caRnW0c3dXG2qYV/PJvwN1r6mjd/fQLgFMO4OJlb26p9fj+7CwZX1MMKVEW1Jo0egCeq5megcmCMF2IA41fKHLn6hzZuoYHgZpyAANCa63DlTlLjWcIQ7BWlRjXIArgaoIq9cif8Q1zIYSR38b+/NQcjobN7Q2Zdc8ObAOUAyiNwgLnLs+T812UAqM1WgSlVImQq0mp+y77P8wjAq6JL2vWLUbh2NiaY7Cx5UnguAKaNvaPnn9oU3PpCApopeJ/gQhlGKXQCqxQlR71AHhnTysTBXj5u7/JTxVxtWJXez23NWe4/40xRg51rHQAMAa0Jus7gCCACAugVFmrTrciPDp4FgEcFd8JgA9OT+L7LmgD4DkABT/HrPHwvYD113rU+hpRigUQIQ2EhX5FfDyf/Rkw8BcUsg2U7wAjB1bT+7XgukV+mghAa0SXUwI2BBvEVQAqhVGgiH1X+xEB4+d47aLD9CGoA5xyO6vB91w0IGHI9GAf8+fGAXBvuInaHQdRno/YsPJuKIXSpqJfHBetDZwCASgHWPfKBfZqMNkVaKM4/2YvG1pX0r33GQC++WKIkyeOct3DvUgQIhUCqCiAYxb1GwuHHxDeb5mEffVxgOfsADIUNQZtHMbzP9Kx8yB9fS8B0NPTw+df9rPpq1exYbDYDlThD0Epnjeax8s7MH46DwgQNTAEVijMzOK6HkA0jjR+PvM7NlxsB6rzl9ciedYDa5IK4GzdtuNYV1fXjRtuvwOAkyM/MDw8/OvHHw3uBwIqIKV/AvgNwEtCNCVsA7q3bNl6Zvv2+yRiNI605F1TBab11wMeVwMXuB7oBO5N2JloLhWQyl9lkzpgVcK6FOY0/qXH8qfZkgdYDvAftC1Oc+4ypOMAAAAASUVORK5CYII=");
+
+            var busLane, flowPath, stationNodes = [];
+
+            function createBusLane() {
+                busLane = new ht.Shape();
+                busLane.setPoints([
+                    {x: 7, y: 180},
+                    {x: 53, y: 180},
+                    {x: 107, y: 180},
+                    {x: 151, y: 180},
+                    {x: 198, y: 180},
+                    {x: 250, y: 180},
+                    {x: 250.05, y: 164},
+                    {x: 250, y: 132},
+                    {x: 272, y: 132},
+                    {x: 289, y: 132},
+                    {x: 348, y: 132},
+                    {x: 430, y: 132},
+                    {x: 475, y: 132},
+                    {x: 523, y: 132},
+                    {x: 557, y: 179},
+                    {x: 591, y: 226},
+                    {x: 626, y: 273},
+                    {x: 675, y: 273},
+                    {x: 716, y: 273},
+                    {x: 761, y: 273}
+                ]);
+                busLane.setSegments(new ht.List([1, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]));
+                busLane.s("shape.background", null);
+                busLane.s("shape.border.color", "rgb(40, 138, 1)");
+                busLane.s("shape.border.width", 10);
+                busLane.setLayer(1);
+                dataModel.add(busLane);
+            };
+
+            function createFlowPath() {
+                flowPath = new ht.Shape(),
+                flowPath.setSegments(new ht.List(busLane.getSegments()._as.slice(0)));
+                flowPath.s("flow", true);
+                flowPath.s("flow.count", 6);
+                flowPath.s("flow.step", 2);
+                flowPath.s("flow.element.image", "bus");
+                flowPath.s("flow.element.max", 50);
+                flowPath.s("flow.element.count", 1);
+                flowPath.s("flow.element.autorotate", 1);
+                flowPath.s("flow.element.shadow.visible", false);
+                flowPath.s("shape.background", null);
+                flowPath.setLayer(3);
+                dataModel.add(flowPath);
+            };
+
+            function createStationNodes() {
+                var points = busLane.getPoints().toArray();
+                var segments = busLane.getSegments();
+                var cursor = -1;
+                // 对所有 shape 上的实际点（非控制点）创建一个圈显示
+                segments.each(function(s) {
+                    var shift = 1;
+                    if (s === 3) shift = 2;
+                    else if (s === 4) shift = 3;
+                    else if (s === 5) return;
+                    cursor += shift;
+
+                    // 创建这个点
+                    var node = new ht.Node();
+                    node.setWidth(15);
+                    node.setHeight(15);
+                    node.s("shape", "circle");
+                    node.s("select.border.width", 0);
+                    node.s("shape.background", "white");
+                    node.s("shape.border.color", "rgb(40, 138, 1)");
+                    node.s("shape.border.width", 2);
+                    node.s("select.width", 0);
+                    node.a("indexInPath", cursor);
+                    node.a("type", "station");
+                    node.setLayer(2);
+                    node.setPosition(points[cursor].x, points[cursor].y);
+                    dataModel.add(node);
+                    stationNodes.push(node);
+                });
+            };
+
+            var isSyncing = false;
+            function syncPath() {
+                isSyncing = true;
+
+                var points = busLane.getPoints().toArray();
+                var segments = busLane.getSegments().toArray();
+                flowPath.setPoints(points);
+                stationNodes.forEach(function(node) {
+                    var index = node.a('indexInPath');
+                    var p = points[index];
+                    node.setPosition(p.x, p.y);
+                });
+
+                isSyncing = false;
+            };
+
+            function init() {
+                graph = new ht.graph.GraphView();
+                dataModel = graph.dm();
+                var view = graph.getView();
+
+                createBusLane();
+                createFlowPath();
+                createStationNodes();
+                syncPath();
+
+                var titleNode = new ht.Node();
+                titleNode.setPosition(140, 100);
+                titleNode.setLayer(3);
+                titleNode.setImage("title");
+                dataModel.add(titleNode);
+
+                dataModel.sm().setFilterFunc(function(data) {
+                    return (data !== flowPath);
+                });
+
+                dataModel.md(function(e) {
+                    if (isSyncing) return;
+                    var property = e.property,
+                        data = e.data,
+                        newPosition = e.newValue;
+                    if (property === "position" && data.a("type") === "station") {
+                        var indexInPath = data.a("indexInPath");
+                        busLane.setPoint(indexInPath, {x: newPosition.x, y: newPosition.y});
+                    }
+                    if (property === 'points' && data === busLane)
+                        syncPath();
+                });
+                graph.setLayers([1, 2, 3]);
+                graph.translate(40, -30);
+                graph.enableFlow(40);
+                view.className = "view";
+                document.body.appendChild(view);
+            }
+        </script>
+    </head>
+    <body onload="init();">
+    </body>
+</html>
