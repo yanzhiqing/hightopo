@@ -60,21 +60,24 @@
                 flatTable = new ht.widget.TablePane();
                 tabView = new ht.widget.TabView();
                 
-                tabView.addToDOM();                                                 
+                tabView.addToDOM();    
 
                 tabView.add('Package', packageTable);
                 tabView.add('Hiberarchy', hiberarchyTable);
                 var flatTab = tabView.add('Flat', flatTable, true);
+                                                          
                      
                 var column = new ht.Column();
                 column.setName('name');
                 column.setWidth(180);
                 column.setDisplayName('Class Name');
+                   
                 flatTable.getColumnModel().add(column);    
     
                 addDiscription(packageTable);
                 addDiscription(hiberarchyTable);                
                 addDiscription(flatTable);
+
                 
                 var dataModel = packageTable.getDataModel();
                 dataModel.map = {};
