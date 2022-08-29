@@ -94,6 +94,10 @@ HT目录文件结构：
         /telecom/ht-telecom-guide.html 电信扩展手册
         /historymanager/ht-historymanager-guide.html 撤销重做手册
          
-网站：http://www.hightopo.com/
-邮箱：service@hightopo.com
+hightopo网站：http://www.hightopo.com/
+hightopo邮箱：service@hightopo.com
+hightopo文档地址：https://www.hightopo.com/guide/guide/core/treetableview/examples/example_structure.html
+以上demo在线预览：https://yanzhiqing.github.io/hightopo/
+
+
 
